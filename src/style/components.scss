@@ -1,0 +1,21 @@
+@use "theme";
+  
+@mixin text() {
+  color: theme.$color-txt;
+}
+
+@mixin body() {
+  font-family: "Avenir95Black";
+  color: theme.$color-txt;
+}
+
+@mixin secondary-text {
+  font-family: "Avenir95Light";
+  color: theme.$color-txt-secondary;
+}
+
+@mixin header() {
+  @include text();
+  font-family: "Avenir95Light";
+  text-transform: uppercase;
+}

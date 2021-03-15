@@ -1,4 +1,4 @@
-import './Flipclock.sass'
+import './Flipclock.scss'
 import { FunctionComponent, useEffect, useState } from "react"
 
 type FlipClockProps = {

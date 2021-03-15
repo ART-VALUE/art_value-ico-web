@@ -1,0 +1,14 @@
+@use "theme";
+@use "components";
+@use 'sass:color';
+
+.dialog {
+  padding: 1rem;
+  border: 0.2rem solid theme.$color-border;
+
+  background-color: theme.$color-bg;
+}
+
+.dialog__title {
+  @include components.header();
+}

@@ -1,0 +1,25 @@
+@use 'components';
+@use 'theme.scss';
+
+.form {
+  label {
+    @include components.secondary-text();
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    @include components.secondary-text();
+  }
+
+  input {
+    @include components.text();
+    background-color: transparent;
+    border: 0.13rem solid theme.$color-border;
+    padding: 0.5rem;
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
