@@ -1,15 +1,14 @@
 import './App.scss'
 import FlipClock from './Flipclock'
 import { loadStripe } from "@stripe/stripe-js"
-import { Elements } from '@stripe/react-stripe-js'
-import CheckoutForm from './CheckoutForm'
 import Modal from 'react-modal'
-import PurchaseDialog from './PurchaseDialog'
+import PurchaseDialog from './purchaseDialog/PurchaseDialog'
 import { useState } from 'react'
+import { io } from 'socket.io-client'
+import { PAYMENT_NS } from '../api'
 
-console.log("Loading stripe...")
 const stripePromise = loadStripe("pk_test_51ITna8JcDKL67QxNOgLJSMRVqFGagqi7pcHXCtewhqPyxqsWt5QrIWLeCoWXTZlZIi2gOhNSh3JE4M6Rr40VFhSJ00cmqxUD2d");
-console.log("Stripe loaded!", stripePromise)
+const paymentApiIo = io(`http://localhost:3000/${PAYMENT_NS}`)
 
 Modal.setAppElement("#root")
 
@@ -29,7 +28,9 @@ export default function App() {
         overlayClassName="PurchaseDialogModalOverlay"
         contentLabel="Coin Purchase Dialog"
         shouldCloseOnOverlayClick={true}>
-        <PurchaseDialog />
+        <PurchaseDialog
+          stripePromise={stripePromise}
+          paymentApiIo={paymentApiIo} />
       </Modal>
 
       <header className="App-header">
@@ -40,10 +41,6 @@ export default function App() {
       <div className="ClockCont">
         <FlipClock date={endDate} />
         <button className="purchase-token" onClick={handlePurchaseTokenClick}>Purchase Art_Value token</button>
-
-        <Elements stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
       </div>
     </div>
   )

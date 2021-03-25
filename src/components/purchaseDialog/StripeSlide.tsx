@@ -1,51 +1,35 @@
-import React, { useState, useEffect, FormEvent } from "react"
+import { useState, FormEvent, FunctionComponent } from "react"
 import {
   CardElement,
-  useStripe,
-  useElements
+  useElements,
+  Elements
 } from "@stripe/react-stripe-js"
-import { StripeCardElementChangeEvent } from "@stripe/stripe-js"
-import './CheckoutForm.sass'
-import { io } from "socket.io-client"
+import { Stripe, StripeCardElementChangeEvent } from "@stripe/stripe-js"
+import './StripeSlide.sass'
+import { Socket } from "socket.io-client"
+import * as purchaseApi from "../../api/purchase"
+import BN from "bn.js"
 
 
 function throwF(throwable: Error): never {
     throw throwable
 }
 
-export default function CheckoutForm() {
+const StripeSlide: FunctionComponent<{
+  checkoutDoneHandler: (avTransactionId: string) => void,
+  paymentApiIo: Socket,
+  stripePromise: Promise<Stripe | null>,
+  amount: BN,
+  address: string
+}> = ({ checkoutDoneHandler, paymentApiIo, stripePromise, amount, address }) => {
   const [succeeded, setSucceeded] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [processing, setProcessing] = useState(false)
   const [disabled, setDisabled] = useState(true)
-  const [clientSecret, setClientSecret] = useState('')
-  const stripe = useStripe()!
   const stripeElements = useElements()!
 
-
-  useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    const socket = io("http://localhost:3000")
-    console.log("Sending intent req")
-    socket.emit("/payment/create-intent", (msg: any) => {
-      console.log("Got response: ", msg)
-    });
-    
-    // window
-    //   .fetch("http://localhost:3000/create-payment-intent", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({items: [{ id: "xl-tshirt" }]})
-    //   })
-    //   .then(res => {
-    //     return res.json()
-    //   })
-    //   .then(data => {
-    //     setClientSecret(data.clientSecret)
-    //   })
-  }, [])
+  // Start fetching client secret now, await in submitHandler
+  const stripeInitResPromise = purchaseApi.stripeInit(paymentApiIo, amount, address)
 
   const cardStyle = {
     style: {
@@ -66,17 +50,19 @@ export default function CheckoutForm() {
   }
 
   const handleCardChange = async (e: StripeCardElementChangeEvent) => {
-    // Listen for changes in the CardElement
-    // and display any errors as the customer types their card details
     setDisabled(e.empty)
     setError(e.error ? e.error.message : null)
   }
 
   const handleSubmit = async (e: FormEvent) => {
+    console.log("Submit")
     e.preventDefault()
     setProcessing(true)
 
-    console.log("stripe", stripe)
+    console.log("Waiting for stripe init...")
+    const { clientSecret, avTxId } = await stripeInitResPromise
+    console.log("Stripe init: ", clientSecret, avTxId)
+    const stripe = (await stripePromise) ?? throwF(new Error("Could not load Stripe"))
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: stripeElements.getElement(CardElement) ?? throwF(new Error("Could not get Stripe CardElement"))
@@ -90,6 +76,7 @@ export default function CheckoutForm() {
       setError(null)
       setProcessing(false)
       setSucceeded(true)
+      checkoutDoneHandler(avTxId)
     }
   }
 
@@ -127,3 +114,5 @@ export default function CheckoutForm() {
     </form>
   )
 }
+
+export default StripeSlide
