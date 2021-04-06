@@ -2,7 +2,7 @@ import BN from "bn.js";
 import { Socket } from "socket.io-client";
 import { asyncApiCall } from ".";
 
-type ApiResponse<T> = {
+export type ApiResponse<T> = {
     success: true,
     data: T
 } | {
@@ -10,7 +10,7 @@ type ApiResponse<T> = {
     errorMsg: string
 }
 
-interface StripeInitData {
+export interface StripeInitData {
     clientSecret: string,
     avTxId: string
 }

@@ -1,13 +1,13 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useEffect, useState } from "react"
 import "./WalletSlide.scss"
 import { getAccounts } from "../../portis"
 import LoadingRing from "../LoadingRing"
 
-type PurchaseDialogProps = {
+type WalletSlideProps = {
     onWalletConnected: (address: string) => void
 }
 
-const PurchaseDialog: FunctionComponent<PurchaseDialogProps> = ({
+const WalletSlide: FunctionComponent<WalletSlideProps> = ({
     onWalletConnected
 }) => {
     const [loadingAccounts, setLoadingAccounts] = useState(false)
@@ -49,4 +49,4 @@ const PurchaseDialog: FunctionComponent<PurchaseDialogProps> = ({
     )
 }
 
-export default PurchaseDialog
+export default WalletSlide

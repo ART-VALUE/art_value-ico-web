@@ -1,4 +1,4 @@
-import { useState, FormEvent, FunctionComponent } from "react"
+import { useState, FormEvent, FunctionComponent, useEffect } from "react"
 import {
   CardElement,
   useElements,
@@ -9,27 +9,42 @@ import './StripeSlide.sass'
 import { Socket } from "socket.io-client"
 import * as purchaseApi from "../../api/purchase"
 import BN from "bn.js"
+import { StripeInitData } from "../../api/purchase"
+import { useQuery } from "react-query"
+import styled from "styled-components"
+import LoadingRing from "../LoadingRing"
 
 
 function throwF(throwable: Error): never {
-    throw throwable
+  throw throwable
 }
 
+const ErrorP = styled.p`
+  color: red;
+`
+
+const Button = styled.button`
+
+`
+
 const StripeSlide: FunctionComponent<{
+  checkoutId: number,
   checkoutDoneHandler: (avTransactionId: string) => void,
   paymentApiIo: Socket,
   stripePromise: Promise<Stripe | null>,
   amount: BN,
   address: string
-}> = ({ checkoutDoneHandler, paymentApiIo, stripePromise, amount, address }) => {
+}> = ({ checkoutId, checkoutDoneHandler, paymentApiIo, stripePromise, amount, address }) => {
   const [succeeded, setSucceeded] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [processing, setProcessing] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const stripeElements = useElements()!
-
-  // Start fetching client secret now, await in submitHandler
-  const stripeInitResPromise = purchaseApi.stripeInit(paymentApiIo, amount, address)
+  const qStripeInitData = useQuery<StripeInitData, string>(
+    ['purchase', 'stripeInit', checkoutId],
+    () => purchaseApi.stripeInit(paymentApiIo, amount, address)
+  )
+  console.log(qStripeInitData)
 
   const cardStyle = {
     style: {
@@ -57,10 +72,15 @@ const StripeSlide: FunctionComponent<{
   const handleSubmit = async (e: FormEvent) => {
     console.log("Submit")
     e.preventDefault()
+    if (qStripeInitData.isLoading || processing || disabled || succeeded) {
+      console.log("Preventing submit because loading")
+      return
+    }
+
     setProcessing(true)
 
     console.log("Waiting for stripe init...")
-    const { clientSecret, avTxId } = await stripeInitResPromise
+    const { clientSecret, avTxId } = qStripeInitData.data!
     console.log("Stripe init: ", clientSecret, avTxId)
     const stripe = (await stripePromise) ?? throwF(new Error("Could not load Stripe"))
     const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -82,35 +102,24 @@ const StripeSlide: FunctionComponent<{
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <CardElement id="card-element" options={cardStyle} onChange={handleCardChange} />
-      <button
-        disabled={processing || disabled || succeeded}
-        id="submit"
-      >
-        <span id="button-text">
-          {processing ? (
-            <div className="spinner" id="spinner"></div>
-          ) : (
-            "Pay now"
-          )}
-        </span>
-      </button>
-      {/* Show any error that happens when processing the payment */}
+      {(!qStripeInitData.isError)
+        ? <>
+          <CardElement id="card-element" options={cardStyle} onChange={handleCardChange} />
+          {qStripeInitData.isLoading || processing
+            ? <LoadingRing />
+            : <button
+              disabled={qStripeInitData.isLoading || processing || disabled || succeeded}>
+              <span>Pay now</span>
+            </button>
+          }
+        </>
+        : <ErrorP>{qStripeInitData.error}</ErrorP>
+      }
       {error && (
         <div className="card-error" role="alert">
           {error}
         </div>
       )}
-      {/* Show a success message upon completion */}
-      <p className={succeeded ? "result-message" : "result-message hidden"}>
-        Payment succeeded, see the result in your
-        <a
-          href={`https://dashboard.stripe.com/test/payments`}
-        >
-          {" "}
-          Stripe dashboard.
-        </a> Refresh the page to pay again.
-      </p>
     </form>
   )
 }
