@@ -7,9 +7,11 @@ const HeaderWrapper = styled.div`
 	${baseTitle}
 	border-bottom: 2px solid ${(props) => props.theme.color.border};
 	text-decoration: none;
+	height: 30vh;
 `;
 
-const LinkList = styled.ul`
+const List = styled.ul`
+    padding: 0;    
     display: grid;
     grid-template-columns: repeat(5, 100px)
     grip-gap: 10px
@@ -17,9 +19,8 @@ const LinkList = styled.ul`
     justify-items: center
 `;
 
-const LinkListItem = styled.li`
-	grid-column: 1 / 6;
-	list-style-type: none;
+const ListItem = styled.li`
+	list-style: none;
 `;
 
 const className = 'nav-item';
@@ -36,7 +37,7 @@ const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
 	&:hover {
 		opacity: 0.5;
 	}
-`
+`;
 
 const OngoingAuction = 'Ongoing Auction';
 const Gallery = 'Gallery';
@@ -46,33 +47,33 @@ const MyProfile = 'My Profile';
 const Header = () => {
 	return (
 		<HeaderWrapper>
-			<LinkList>
-				<LinkListItem>
+			<List>
+				<ListItem>
 					<StyledLink to="/" exact>
 						<img alt="art value logo" src={logo} style={{ width: 'auto', height: '60px' }} />
 					</StyledLink>
-				</LinkListItem>
-				<LinkListItem>
+				</ListItem>
+				<ListItem>
 					<StyledLink to="/ongoing-auction" exact>
 						{OngoingAuction}
 					</StyledLink>
-				</LinkListItem>
-				<LinkListItem>
+				</ListItem>
+				<ListItem>
 					<StyledLink to="/gallery" exact>
 						{Gallery}
 					</StyledLink>
-				</LinkListItem>
-				<LinkListItem>
+				</ListItem>
+				<ListItem>
 					<StyledLink to="/calender" exact>
 						{Calender}
 					</StyledLink>
-				</LinkListItem>
-				<LinkListItem>
+				</ListItem>
+				<ListItem>
 					<StyledLink to="/my-profile" exact>
 						{MyProfile}
 					</StyledLink>
-				</LinkListItem>
-			</LinkList>
+				</ListItem>
+			</List>
 		</HeaderWrapper>
 	);
 };
