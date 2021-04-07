@@ -6,9 +6,20 @@ import logo from '../assets/images/art-value-logo.webp';
 const HeaderWrapper = styled.div`
 	${baseTitle}
 	border-bottom: 2px solid ${(props) => props.theme.color.border};
-	background-color: ${(props) => props.theme.color.surface};
-	height: 10vh;
 	text-decoration: none;
+`;
+
+const LinkList = styled.ul`
+    display: grid;
+    grid-template-columns: repeat(5, 100px)
+    grip-gap: 10px
+    justify-content: center
+    justify-items: center
+`;
+
+const LinkListItem = styled.li`
+	grid-column: 1 / 6;
+	list-style-type: none;
 `;
 
 const className = 'nav-item';
@@ -22,7 +33,10 @@ const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
 	&.${activeClassName} {
 		font-weight: bold;
 	}
-`;
+	&:hover {
+		opacity: 0.5;
+	}
+`
 
 const OngoingAuction = 'Ongoing Auction';
 const Gallery = 'Gallery';
@@ -32,21 +46,33 @@ const MyProfile = 'My Profile';
 const Header = () => {
 	return (
 		<HeaderWrapper>
-			<StyledLink to="/" exact>
-				<img alt="art value logo" src={logo} width="100px" />
-			</StyledLink>
-			<StyledLink to="/ongoing-auction" exact>
-				{OngoingAuction}
-			</StyledLink>
-			<StyledLink to="/gallery" exact>
-				{Gallery}
-			</StyledLink>
-			<StyledLink to="/calender" exact>
-				{Calender}
-			</StyledLink>
-			<StyledLink to="/my-profile" exact>
-				{MyProfile}
-			</StyledLink>
+			<LinkList>
+				<LinkListItem>
+					<StyledLink to="/" exact>
+						<img alt="art value logo" src={logo} style={{ width: 'auto', height: '60px' }} />
+					</StyledLink>
+				</LinkListItem>
+				<LinkListItem>
+					<StyledLink to="/ongoing-auction" exact>
+						{OngoingAuction}
+					</StyledLink>
+				</LinkListItem>
+				<LinkListItem>
+					<StyledLink to="/gallery" exact>
+						{Gallery}
+					</StyledLink>
+				</LinkListItem>
+				<LinkListItem>
+					<StyledLink to="/calender" exact>
+						{Calender}
+					</StyledLink>
+				</LinkListItem>
+				<LinkListItem>
+					<StyledLink to="/my-profile" exact>
+						{MyProfile}
+					</StyledLink>
+				</LinkListItem>
+			</LinkList>
 		</HeaderWrapper>
 	);
 };
