@@ -5,27 +5,25 @@ import logo from '../assets/images/art-value-logo.webp';
 
 const HeaderWrapper = styled.div`
 	${baseTitle}
-	border-bottom: 2px solid ${(props) => props.theme.color.border};
-	text-decoration: none;
-	height: 30vh;
+	height: 20vh
+    @media (min-width: 768px) {
+		border-bottom: 2px solid ${(props) => props.theme.color.border};
+	}
 `;
 
-const List = styled.ul`
-    padding: 0;    
-    display: grid;
-    grid-template-columns: repeat(5, 100px)
-    grip-gap: 10px
-    justify-content: center
-    justify-items: center
-`;
-
-const ListItem = styled.li`
-	list-style: none;
+const Grid = styled.div`
+	display: grid;
+	grid-gap: 1rem;
+	justify-items: center;
+	text-align: center;
+	@media (max-width: 768px) {
+		padding: 1em;
+	}
 `;
 
 const className = 'nav-item';
 const activeClassName = 'nav-item-active';
-
+/* Make hover conditional */
 const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
 	${baseText}
 	&.${className} {
@@ -37,6 +35,13 @@ const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
 	&:hover {
 		opacity: 0.5;
 	}
+	@media (max-width: 768px) {
+		font-size: 1.2em;
+		min-height: 50px;
+		&:hover {
+			opacity: 1;
+		}
+	}
 `;
 
 const OngoingAuction = 'Ongoing Auction';
@@ -47,33 +52,23 @@ const MyProfile = 'My Profile';
 const Header = () => {
 	return (
 		<HeaderWrapper>
-			<List>
-				<ListItem>
-					<StyledLink to="/" exact>
-						<img alt="art value logo" src={logo} style={{ width: 'auto', height: '60px' }} />
-					</StyledLink>
-				</ListItem>
-				<ListItem>
-					<StyledLink to="/ongoing-auction" exact>
-						{OngoingAuction}
-					</StyledLink>
-				</ListItem>
-				<ListItem>
-					<StyledLink to="/gallery" exact>
-						{Gallery}
-					</StyledLink>
-				</ListItem>
-				<ListItem>
-					<StyledLink to="/calender" exact>
-						{Calender}
-					</StyledLink>
-				</ListItem>
-				<ListItem>
-					<StyledLink to="/my-profile" exact>
-						{MyProfile}
-					</StyledLink>
-				</ListItem>
-			</List>
+			<Grid>
+				<StyledLink to="/" exact>
+					<img alt="art value logo" src={logo} style={{ width: 'auto', height: '60px' }} />
+				</StyledLink>
+				<StyledLink to="/ongoing-auction" exact>
+					{OngoingAuction}
+				</StyledLink>
+				<StyledLink to="/gallery" exact>
+					{Gallery}
+				</StyledLink>
+				<StyledLink to="/calender" exact>
+					{Calender}
+				</StyledLink>
+				<StyledLink to="/my-profile" exact>
+					{MyProfile}
+				</StyledLink>
+			</Grid>
 		</HeaderWrapper>
 	);
 };
