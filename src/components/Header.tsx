@@ -5,24 +5,25 @@ import logo from '../assets/images/art-value-logo.webp';
 
 const HeaderWrapper = styled.div`
 	${baseTitle}
-	height: 20vh
-    @media (min-width: 768px) {
-		border-bottom: 2px solid ${(props) => props.theme.color.border};
-	}
 `;
 
 const Grid = styled.div`
 	display: grid;
-	grid-gap: 1rem;
+	grid-gap: 2rem;
 	justify-items: center;
 	text-align: center;
-	@media (max-width: 768px) {
-		padding: 1em;
+	padding: 1em;
+	@media (min-width: 768px) {
+		grid-template-columns: repeat(6, fit-content(200px));
+		justify-items: start;
+		align-items: center;
+		padding: 0.2em;
+		border-bottom: 2px solid ${(props) => props.theme.color.border};
 	}
 `;
 
-const className = 'nav-item';
-const activeClassName = 'nav-item-active';
+const className = 'header-item';
+const activeClassName = 'header-item-active';
 /* Make hover conditional */
 const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
 	${baseText}
@@ -33,7 +34,7 @@ const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
 		font-weight: bold;
 	}
 	&:hover {
-		opacity: 0.5;
+		opacity: 0.6;
 	}
 	@media (max-width: 768px) {
 		font-size: 1.2em;
