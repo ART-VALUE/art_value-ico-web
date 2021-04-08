@@ -9,16 +9,35 @@ const HeaderWrapper = styled.div`
 
 const Grid = styled.div`
 	display: grid;
-	grid-gap: 2rem;
+	grid-gap: 1rem;
 	justify-items: center;
-	text-align: center;
 	padding: 1em;
 	@media (min-width: 768px) {
-		grid-template-columns: repeat(6, fit-content(200px));
-		justify-items: start;
+		grid-template-areas: 'logo nav . user';
 		align-items: center;
 		padding: 0.2em;
 		border-bottom: 2px solid ${(props) => props.theme.color.border};
+	}
+`;
+
+const Logo = styled.div`
+	@media (min-width: 768px) {
+		grid-area: logo;
+		justify-self: start
+	}
+`;
+
+const Nav = styled.div`
+	@media (min-width: 768px) {
+		grid-area: nav;
+		justify-content: center
+	}
+`;
+
+const User = styled.div`
+	@media (min-width: 768px) {
+		grid-area: user;
+		justify-self: end
 	}
 `;
 
@@ -29,6 +48,8 @@ const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
 	${baseText}
 	&.${className} {
 		text-decoration: none;
+		margin: 0
+		padding: 0
 	}
 	&.${activeClassName} {
 		font-weight: bold;
@@ -54,21 +75,27 @@ const Header = () => {
 	return (
 		<HeaderWrapper>
 			<Grid>
-				<StyledLink to="/" exact>
-					<img alt="art value logo" src={logo} style={{ width: 'auto', height: '60px' }} />
-				</StyledLink>
-				<StyledLink to="/ongoing-auction" exact>
-					{OngoingAuction}
-				</StyledLink>
-				<StyledLink to="/gallery" exact>
-					{Gallery}
-				</StyledLink>
-				<StyledLink to="/calender" exact>
-					{Calender}
-				</StyledLink>
-				<StyledLink to="/my-profile" exact>
-					{MyProfile}
-				</StyledLink>
+				<Logo>
+					<StyledLink to="/" exact>
+						<img alt="art value logo" src={logo} style={{ width: 'auto', height: '60px' }} />
+					</StyledLink>
+				</Logo>
+				<Nav>
+					<StyledLink to="/ongoing-auction" exact>
+						{OngoingAuction}
+					</StyledLink>
+					<StyledLink to="/gallery" exact>
+						{Gallery}
+					</StyledLink>
+					<StyledLink to="/calender" exact>
+						{Calender}
+					</StyledLink>
+				</Nav>
+				<User>
+					<StyledLink to="/my-profile" exact>
+						{MyProfile}
+					</StyledLink>
+				</User>
 			</Grid>
 		</HeaderWrapper>
 	);
