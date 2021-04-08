@@ -13,7 +13,12 @@ const Grid = styled.div`
 	justify-items: center;
 	padding: 1em;
 	@media (min-width: 768px) {
-		grid-template-areas: 'logo nav . user';
+		grid-template-columns:
+			max-content
+			min-content
+			auto
+			min-content;
+		grid-template-areas: 'logo nav user';
 		align-items: center;
 		padding: 0.2em;
 		border-bottom: 2px solid ${(props) => props.theme.color.border};
@@ -23,21 +28,32 @@ const Grid = styled.div`
 const Logo = styled.div`
 	@media (min-width: 768px) {
 		grid-area: logo;
-		justify-self: start
+		justify-self: start;
 	}
 `;
 
-const Nav = styled.div`
+const NavList = styled.ul`
 	@media (min-width: 768px) {
 		grid-area: nav;
-		justify-content: center
+		place-self: center;
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: max-content;
+		gap: 0.5rem;
+		list-style: none;
+	}
+`;
+
+const NavListItem = styled.li`
+	@media (min-width: 768px) {
+		margin-right: 0.5em;
 	}
 `;
 
 const User = styled.div`
 	@media (min-width: 768px) {
 		grid-area: user;
-		justify-self: end
+		justify-self: end;
 	}
 `;
 
@@ -48,8 +64,6 @@ const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
 	${baseText}
 	&.${className} {
 		text-decoration: none;
-		margin: 0
-		padding: 0
 	}
 	&.${activeClassName} {
 		font-weight: bold;
@@ -80,17 +94,23 @@ const Header = () => {
 						<img alt="art value logo" src={logo} style={{ width: 'auto', height: '60px' }} />
 					</StyledLink>
 				</Logo>
-				<Nav>
-					<StyledLink to="/ongoing-auction" exact>
-						{OngoingAuction}
-					</StyledLink>
-					<StyledLink to="/gallery" exact>
-						{Gallery}
-					</StyledLink>
-					<StyledLink to="/calender" exact>
-						{Calender}
-					</StyledLink>
-				</Nav>
+				<NavList>
+					<NavListItem>
+						<StyledLink to="/ongoing-auction" exact>
+							{OngoingAuction}
+						</StyledLink>
+					</NavListItem>
+					<NavListItem>
+						<StyledLink to="/gallery" exact>
+							{Gallery}
+						</StyledLink>
+					</NavListItem>
+					<NavListItem>
+						<StyledLink to="/calender" exact>
+							{Calender}
+						</StyledLink>
+					</NavListItem>
+				</NavList>
 				<User>
 					<StyledLink to="/my-profile" exact>
 						{MyProfile}
