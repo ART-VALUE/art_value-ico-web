@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { baseText, baseTitle } from './styledComponents';
-import logo from '../assets/images/art-value-logo.webp';
+import { baseText, baseTitle } from '../styledComponents';
+import { HeaderDesktop } from './HeaderDesktop';
+import { HeaderMobile } from './HeaderMobile';
+import artValueLogo from '../../assets/images/art-value-logo.webp';
 
 const HeaderWrapper = styled.div`
 	${baseTitle}
@@ -14,10 +16,9 @@ const Grid = styled.div`
 	padding: 1em;
 	@media (min-width: 768px) {
 		grid-template-columns:
-			max-content
 			min-content
-			auto
-			min-content;
+			min-content
+			auto;
 		grid-template-areas: 'logo nav user';
 		align-items: center;
 		padding: 0.2em;
@@ -54,6 +55,7 @@ const User = styled.div`
 	@media (min-width: 768px) {
 		grid-area: user;
 		justify-self: end;
+		margin-right: 0.5em;
 	}
 `;
 
@@ -91,7 +93,7 @@ const Header = () => {
 			<Grid>
 				<Logo>
 					<StyledLink to="/" exact>
-						<img alt="art value logo" src={logo} style={{ width: 'auto', height: '60px' }} />
+						<img alt="art value logo" src={artValueLogo} style={{ width: 'auto', height: '60px' }} />
 					</StyledLink>
 				</Logo>
 				<NavList>

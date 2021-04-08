@@ -3,7 +3,7 @@ import FlipClock from './Flipclock';
 import { loadStripe } from '@stripe/stripe-js';
 import Modal from 'react-modal';
 import PurchaseDialog from './purchaseDialog/PurchaseDialog';
-import Header from './Header';
+import Header from './Header/Header';
 import { useState } from 'react';
 import { io } from 'socket.io-client';
 import { PAYMENT_NS } from '../api';
