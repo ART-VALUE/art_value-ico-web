@@ -1,9 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { baseText, baseTitle } from '../styledComponents';
 import { HeaderDesktop } from './HeaderDesktop';
 import { HeaderMobile } from './HeaderMobile';
 import artValueLogo from '../../assets/images/art-value-logo.webp';
+import RoutingPaths from '../../routes/RoutingPaths';
 
 const HeaderWrapper = styled.div`
 	${baseTitle}
@@ -21,15 +22,19 @@ const Grid = styled.div`
 			auto;
 		grid-template-areas: 'logo nav user';
 		align-items: center;
-		padding: 0.2em;
+		padding: 0;
 		border-bottom: 2px solid ${(props) => props.theme.color.border};
 	}
 `;
 
-const Logo = styled.div`
+const Logo = styled.img`
+	width: auto;
+	height: 60px;
 	@media (min-width: 768px) {
 		grid-area: logo;
 		justify-self: start;
+		margin: 0;
+		padding: 0;
 	}
 `;
 
@@ -59,17 +64,11 @@ const User = styled.div`
 	}
 `;
 
-const className = 'header-item';
-const activeClassName = 'header-item-active';
-/* Make hover conditional */
-const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
+/* Add boolean to control bold or not */
+const StyledLink = styled.span`
 	${baseText}
-	&.${className} {
-		text-decoration: none;
-	}
-	&.${activeClassName} {
-		font-weight: bold;
-	}
+	font-weight: bold;
+	text-decoration: none;
 	&:hover {
 		opacity: 0.6;
 	}
@@ -82,41 +81,34 @@ const StyledLink = styled(NavLink).attrs({ className, activeClassName })`
 	}
 `;
 
-const OngoingAuction = 'Ongoing Auction';
-const Gallery = 'Gallery';
-const Calender = 'Calender';
-const MyProfile = 'My Profile';
+const OngoingAuction: string = 'Ongoing Auction';
+const Gallery: string = 'Gallery';
+const Calender: string = 'Calender';
+const MyProfile: string = 'My Profile';
 
 const Header = () => {
+	const history = useHistory();
 	return (
 		<HeaderWrapper>
 			<Grid>
-				<Logo>
-					<StyledLink to="/" exact>
-						<img alt="art value logo" src={artValueLogo} style={{ width: 'auto', height: '60px' }} />
-					</StyledLink>
-				</Logo>
+				<Logo
+					alt="art value logo"
+					src={artValueLogo}
+					onClick={() => history.push(RoutingPaths.homeView)}
+				></Logo>
 				<NavList>
 					<NavListItem>
-						<StyledLink to="/ongoing-auction" exact>
-							{OngoingAuction}
-						</StyledLink>
+						<StyledLink onClick={() => history.push(RoutingPaths.auctionView)}>{OngoingAuction}</StyledLink>
 					</NavListItem>
 					<NavListItem>
-						<StyledLink to="/gallery" exact>
-							{Gallery}
-						</StyledLink>
+						<StyledLink onClick={() => history.push(RoutingPaths.galleryView)}>{Gallery}</StyledLink>
 					</NavListItem>
 					<NavListItem>
-						<StyledLink to="/calender" exact>
-							{Calender}
-						</StyledLink>
+						<StyledLink onClick={() => history.push(RoutingPaths.calenderView)}>{Calender}</StyledLink>
 					</NavListItem>
 				</NavList>
 				<User>
-					<StyledLink to="/my-profile" exact>
-						{MyProfile}
-					</StyledLink>
+					<StyledLink onClick={() => history.push(RoutingPaths.profileView)}>{MyProfile}</StyledLink>
 				</User>
 			</Grid>
 		</HeaderWrapper>
