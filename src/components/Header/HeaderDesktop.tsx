@@ -66,32 +66,34 @@ const User = styled.div`
 type HeaderDesktopLogo = {
 	logo: string;
 	tabs: Array<string>;
+	paths: Array<string>;
 };
 
-export const HeaderDesktop: FunctionComponent<HeaderDesktopLogo> = ({ logo, tabs }) => {
+export const HeaderDesktop: FunctionComponent<HeaderDesktopLogo> = ({ logo, tabs, paths }) => {
+    console.log(paths)
 	const history = useHistory();
 	const currentRoute = useHistory().location.pathname.toLowerCase();
 	return (
 		<Grid>
-			<Logo alt="art value logo" src={logo} onClick={() => history.push(RoutingPaths.homeView)}></Logo>
+			<Logo alt="art value logo" src={logo} onClick={() => history.push(paths[0])}></Logo>
 			<NavList>
 				<NavListItem>
 					<StyledLink
-						className={currentRoute.includes(RoutingPaths.auctionView) ? 'active' : ''}
-						onClick={() => history.push(RoutingPaths.auctionView)}
+						className={currentRoute.includes(paths[1]) ? 'active' : ''}
+						onClick={() => history.push(paths[1])}
 					>
 						{tabs[0]}
 					</StyledLink>
 				</NavListItem>
 				<NavListItem>
-					<StyledLink onClick={() => history.push(RoutingPaths.galleryView)}>{tabs[1]}</StyledLink>
+					<StyledLink onClick={() => history.push(paths[2])}>{tabs[1]}</StyledLink>
 				</NavListItem>
 				<NavListItem>
-					<StyledLink onClick={() => history.push(RoutingPaths.calenderView)}>{tabs[2]}</StyledLink>
+					<StyledLink onClick={() => history.push(paths[3])}>{tabs[2]}</StyledLink>
 				</NavListItem>
 			</NavList>
 			<User>
-				<StyledLink onClick={() => history.push(RoutingPaths.profileView)}>{tabs[3]}</StyledLink>
+				<StyledLink onClick={() => history.push(paths[4])}>{tabs[3]}</StyledLink>
 			</User>
 		</Grid>
 	);

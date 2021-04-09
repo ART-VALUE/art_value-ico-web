@@ -2,7 +2,7 @@ const homeView: string = '/';
 const auctionView: string = '/ongoing-auction';
 const galleryView: string = '/gallery';
 const calenderView: string = '/calender';
-const profileView: string = '/myprofile';
+const profileView: string = '/my-profile';
 
 /* eslint import/no-anonymous-default-export: [2, {"allowObject": true}] */
 export default {
