@@ -65,35 +65,34 @@ const User = styled.div`
 
 type HeaderDesktopLogo = {
 	logo: string;
-	tabs: Array<string>;
-	paths: Array<string>;
+	tab: Array<string>;
+	path: Array<string>;
 };
 
-export const HeaderDesktop: FunctionComponent<HeaderDesktopLogo> = ({ logo, tabs, paths }) => {
-    console.log(paths)
+export const HeaderDesktop: FunctionComponent<HeaderDesktopLogo> = ({ logo, tab, path }) => {
 	const history = useHistory();
 	const currentRoute = useHistory().location.pathname.toLowerCase();
 	return (
 		<Grid>
-			<Logo alt="art value logo" src={logo} onClick={() => history.push(paths[0])}></Logo>
+			<Logo alt="art value logo" src={logo} onClick={() => history.push(path[0])}></Logo>
 			<NavList>
 				<NavListItem>
 					<StyledLink
-						className={currentRoute.includes(paths[1]) ? 'active' : ''}
-						onClick={() => history.push(paths[1])}
+						className={currentRoute.includes(path[1]) ? 'active' : ''}
+						onClick={() => history.push(path[1])}
 					>
-						{tabs[0]}
+						{tab[0]}
 					</StyledLink>
 				</NavListItem>
 				<NavListItem>
-					<StyledLink onClick={() => history.push(paths[2])}>{tabs[1]}</StyledLink>
+					<StyledLink onClick={() => history.push(path[2])}>{tab[1]}</StyledLink>
 				</NavListItem>
 				<NavListItem>
-					<StyledLink onClick={() => history.push(paths[3])}>{tabs[2]}</StyledLink>
+					<StyledLink onClick={() => history.push(path[3])}>{tab[2]}</StyledLink>
 				</NavListItem>
 			</NavList>
 			<User>
-				<StyledLink onClick={() => history.push(paths[4])}>{tabs[3]}</StyledLink>
+				<StyledLink onClick={() => history.push(path[4])}>{tab[3]}</StyledLink>
 			</User>
 		</Grid>
 	);

@@ -22,7 +22,7 @@ const RoutePaths: string[] = [
 const Header = () => {
 	return (
 		<HeaderWrapper>
-			<HeaderDesktop logo={artValueLogo} tabs={HeaderTabs} paths={RoutePaths} />
+			<HeaderDesktop logo={artValueLogo} tab={HeaderTabs} path={RoutePaths} />
 		</HeaderWrapper>
 	);
 };
