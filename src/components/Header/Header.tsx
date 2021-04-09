@@ -8,8 +8,7 @@ const HeaderWrapper = styled.div`
 	${baseTitle}
 `;
 
-let HeaderTabs: string[] = [];
-HeaderTabs = ['Ongoing Auction', 'Gallery', 'Calender', 'My Profile'];
+const HeaderTabs: string[] = ['Ongoing Auction', 'Gallery', 'Calender', 'My Profile'];
 
 const Header = () => {
 	return (
