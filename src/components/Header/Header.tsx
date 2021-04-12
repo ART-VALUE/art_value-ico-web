@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { baseTitle } from '../styledComponents';
 import { HeaderDesktop } from './HeaderDesktop';
@@ -43,15 +43,15 @@ const Header = () => {
 		};
 	});
 
-	const handleViewport = () => {
+	const handleViewportSizeChange = () => {
 		if (dimensions.width < 700) {
-			return <HeaderMobile logo={HeaderLogo} />;
+			return <HeaderMobile logo={HeaderLogo} tabs={HeaderTabs} paths={HeaderPaths}/>;
 		} else {
 			return <HeaderDesktop logo={HeaderLogo} tabs={HeaderTabs} paths={HeaderPaths} />;
 		}
 	};
 
-	return <HeaderWrapper>{handleViewport()}</HeaderWrapper>;
+	return <HeaderWrapper>{handleViewportSizeChange()}</HeaderWrapper>;
 };
 
 export default Header;

@@ -32,6 +32,7 @@ const theme = {
 	font: {
 		text: 'Avenir95Light',
 		title: 'Avenir95Black',
+		fontDisplay: 'swap'
 	},
 };
 
