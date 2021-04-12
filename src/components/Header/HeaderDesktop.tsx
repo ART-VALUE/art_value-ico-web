@@ -1,10 +1,8 @@
 import { FunctionComponent } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { baseText } from '../styledComponents';
-import RoutingPaths from '../../routes/RoutingPaths';
 
-const Grid = styled.div`
+const DesktopWrapper = styled.div`
 	display: grid;
 	grid-gap: 1rem;
 	justify-items: center;
@@ -20,8 +18,7 @@ const Grid = styled.div`
 `;
 
 const className: string = 'x';
-const StyledLink = styled.span.attrs({ className })`
-	${baseText}
+const DesktopLink = styled.span.attrs({ className })`
 	text-decoration: none;
 	&. ${className} {
 		font-weight: bold;
@@ -31,9 +28,9 @@ const StyledLink = styled.span.attrs({ className })`
 	}
 `;
 
-const Logo = styled.img`
-	width: auto;
-	height: 60px;
+const DesktopLogo = styled.img`
+	width: 120px;
+	height: auto;
 	grid-area: logo;
 	justify-self: start;
 	margin: 0;
@@ -63,37 +60,41 @@ const User = styled.div`
 	cursor: pointer;
 `;
 
-type HeaderDesktopLogo = {
+type DesktopProps = {
 	logo: string;
-	tab: Array<string>;
-	path: Array<string>;
+	tabs: ReadonlyArray<string>;
+	paths: ReadonlyArray<string>;
 };
 
-export const HeaderDesktop: FunctionComponent<HeaderDesktopLogo> = ({ logo, tab, path }) => {
+/* Make number of tabs and paths selectable */
+/* Fix className and currentRoute */
+/* Move css for StyledLink inside component */
+
+export const HeaderDesktop: FunctionComponent<DesktopProps> = ({ logo, tabs, paths }) => {
 	const history = useHistory();
 	const currentRoute = useHistory().location.pathname.toLowerCase();
 	return (
-		<Grid>
-			<Logo alt="art value logo" src={logo} onClick={() => history.push(path[0])}></Logo>
+		<DesktopWrapper>
+			<DesktopLogo alt="art value logo" src={logo} onClick={() => history.push(paths[0])}></DesktopLogo>
 			<NavList>
 				<NavListItem>
-					<StyledLink
-						className={currentRoute.includes(path[1]) ? 'active' : ''}
-						onClick={() => history.push(path[1])}
+					<DesktopLink
+						className={currentRoute.includes(paths[1]) ? 'active' : ''}
+						onClick={() => history.push(paths[1])}
 					>
-						{tab[0]}
-					</StyledLink>
+						{tabs[0]}
+					</DesktopLink>
 				</NavListItem>
 				<NavListItem>
-					<StyledLink onClick={() => history.push(path[2])}>{tab[1]}</StyledLink>
+					<DesktopLink onClick={() => history.push(paths[2])}>{tabs[1]}</DesktopLink>
 				</NavListItem>
 				<NavListItem>
-					<StyledLink onClick={() => history.push(path[3])}>{tab[2]}</StyledLink>
+					<DesktopLink onClick={() => history.push(paths[3])}>{tabs[2]}</DesktopLink>
 				</NavListItem>
 			</NavList>
 			<User>
-				<StyledLink onClick={() => history.push(path[4])}>{tab[3]}</StyledLink>
+				<DesktopLink onClick={() => history.push(paths[4])}>{tabs[3]}</DesktopLink>
 			</User>
-		</Grid>
+		</DesktopWrapper>
 	);
 };
