@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 type StyledMenuProps = {
 	open: boolean;
-}
+};
 
-export const StyledMenu=styled.nav<StyledMenuProps>`
+export const StyledMenu = styled.nav<StyledMenuProps>`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -16,7 +16,7 @@ export const StyledMenu=styled.nav<StyledMenuProps>`
 	top: 0;
 	left: 0;
 	transition: transform 0.3s ease-in-out;
-
+	transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
 	div {
 		font-size: 1rem;
 		text-transform: uppercase;
