@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { baseTitle } from '../styledComponents';
-import { HeaderDesktop } from './HeaderDesktop';
-import { HeaderMobile } from './HeaderMobile';
+import { HeaderDesktop } from './desktop/HeaderDesktop';
+import { HeaderMobile } from './mobile/HeaderMobile';
 import HeaderLogo from '../../assets/images/art-value-logo.webp';
 import RoutingPaths from '../../routes/RoutingPaths';
 
