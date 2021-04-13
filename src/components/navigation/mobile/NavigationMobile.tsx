@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { Burger } from './Burger/Burger';
 import { Menu } from './Menu/Menu';
 
+const Wrapper = styled.div`
+	padding: 0;
+`;
+
 const Logo = styled.img`
 	max-width: 160px;
 	height: auto;
@@ -23,15 +27,16 @@ interface MobileState {
 }
 
 /* TODO: add click on side of menu to close it */
+/*  Add styling to div*/
 
 export const HeaderMobile: FunctionComponent<MobileProps> = ({ logo, tabs, paths }) => {
 	const [open, setOpen] = useState<MobileState['open']>(false);
 	const history = useHistory();
 	return (
-		<div>
+		<Wrapper>
 			<Logo className="menu-item" alt="art value logo" src={logo} onClick={() => history.push(paths[0])} />
 			<Burger open={open} setOpen={setOpen} />
 			<Menu open={open} setOpen={setOpen} tabs={tabs} paths={paths} />
-		</div>
+		</Wrapper>
 	);
 };

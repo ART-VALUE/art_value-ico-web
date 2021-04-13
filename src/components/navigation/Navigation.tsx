@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { baseTitle } from '../styledComponents';
+import { StyledNavigation } from './StyledNavigation.styles';
 import { HeaderDesktop } from './desktop/NavigationDesktop';
 import { HeaderMobile } from './mobile/NavigationMobile';
 import HeaderLogo from '../../assets/images/art-value-logo.webp';
 import RoutingPaths from '../../routes/RoutingPaths';
 
-const HeaderWrapper = styled.div`
-	${baseTitle}
-	height: 100px
-`;
+/* TODO: Fix height of header dependent on view */
 
 const TabNames: string[] = ['Ongoing Auction', 'Gallery', 'Calender', 'My Profile'];
 const HeaderTabs: ReadonlyArray<string> = TabNames;
@@ -52,7 +48,7 @@ const Header = () => {
 		}
 	};
 
-	return <HeaderWrapper>{handleViewportSizeChange()}</HeaderWrapper>;
+	return <StyledNavigation viewportWidth={dimensions.width}>{handleViewportSizeChange()}</StyledNavigation>;
 };
 
 export default Header;
