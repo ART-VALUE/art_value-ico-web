@@ -32,7 +32,6 @@ const theme = {
 	font: {
 		text: 'Avenir95Light',
 		title: 'Avenir95Black',
-		fontDisplay: 'swap'
 	},
 };
 
@@ -64,9 +63,11 @@ export default function App() {
 						</Route>
 					</Switch>
 
-					{/* <div className="ClockCont">
-            <button className="purchase-token" onClick={handlePurchaseTokenClick}>Purchase Art_Value token</button>
-          </div> */}
+					<div className="ClockCont">
+						<button className="purchase-token" onClick={handlePurchaseTokenClick}>
+							Purchase Art_Value token
+						</button>
+					</div>
 				</Router>
 			</ThemeProvider>
 		</div>

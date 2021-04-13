@@ -8,6 +8,7 @@ import RoutingPaths from '../../routes/RoutingPaths';
 
 const HeaderWrapper = styled.div`
 	${baseTitle}
+	height: 100px
 `;
 
 const TabNames: string[] = ['Ongoing Auction', 'Gallery', 'Calender', 'My Profile'];
@@ -45,7 +46,7 @@ const Header = () => {
 
 	const handleViewportSizeChange = () => {
 		if (dimensions.width < 700) {
-			return <HeaderMobile logo={HeaderLogo} tabs={HeaderTabs} paths={HeaderPaths}/>;
+			return <HeaderMobile logo={HeaderLogo} tabs={HeaderTabs} paths={HeaderPaths} />;
 		} else {
 			return <HeaderDesktop logo={HeaderLogo} tabs={HeaderTabs} paths={HeaderPaths} />;
 		}

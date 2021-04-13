@@ -5,17 +5,14 @@ import { StyledMenu } from './StyledMenu.styles';
 interface MenuProps {
 	open: boolean;
 	setOpen: (value: boolean) => void;
-	logo: string;
 	tabs: ReadonlyArray<string>;
 	paths: ReadonlyArray<string>;
 }
 
-export const Menu: FunctionComponent<MenuProps> = ({ open, logo, tabs, paths }) => {
+export const Menu: FunctionComponent<MenuProps> = ({ open, tabs, paths }) => {
 	const history = useHistory();
 	return (
 		<StyledMenu open={open}>
-			{/* 			<img className="menu-item" alt="art value logo" src={logo} onClick={() => history.push(paths[0])} />
-			 */}{' '}
 			<div className="menu-item" onClick={() => history.push(paths[1])}>
 				{tabs[0]}
 			</div>
