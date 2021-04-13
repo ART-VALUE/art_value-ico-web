@@ -22,6 +22,8 @@ interface MobileState {
 	open: boolean;
 }
 
+/* TODO: add click on side of menu to close it */
+
 export const HeaderMobile: FunctionComponent<MobileProps> = ({ logo, tabs, paths }) => {
 	const [open, setOpen] = useState<MobileState['open']>(false);
 	const history = useHistory();
