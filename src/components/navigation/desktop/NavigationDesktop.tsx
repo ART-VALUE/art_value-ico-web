@@ -8,10 +8,6 @@ type DesktopProps = {
 	paths: ReadonlyArray<string>;
 };
 
-/* Make number of tabs and paths selectable */
-/* Fix className and currentRoute */
-/* Move css for StyledLink inside component */
-
 export const NavigationDesktop: FunctionComponent<DesktopProps> = ({ logo, tabs, paths }) => {
 	const history = useHistory();
 	const currentRoute = useLocation();
