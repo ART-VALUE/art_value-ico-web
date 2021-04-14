@@ -5,7 +5,7 @@ import { HeaderMobile } from './mobile/NavigationMobile';
 import HeaderLogo from '../../assets/images/art-value-logo.webp';
 import RoutingPaths from '../../routes/RoutingPaths';
 
-/* TODO: Fix height of header dependent on view */
+/* TODO: Check correct header heights for different viewports */
 
 const TabNames: string[] = ['Ongoing Auction', 'Gallery', 'Calender', 'My Profile'];
 const HeaderTabs: ReadonlyArray<string> = TabNames;

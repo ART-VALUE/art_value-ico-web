@@ -1,5 +1,6 @@
-import { useState, FunctionComponent } from 'react';
+import { useState, FunctionComponent, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useOnClickOutside } from '../../hooks/hooks';
 import styled from 'styled-components';
 import { Burger } from './Burger/Burger';
 import { Menu } from './Menu/Menu';
@@ -31,9 +32,11 @@ interface MobileState {
 
 export const HeaderMobile: FunctionComponent<MobileProps> = ({ logo, tabs, paths }) => {
 	const [open, setOpen] = useState<MobileState['open']>(false);
+	const node = useRef<HTMLDivElement>(null);
+	useOnClickOutside(node, () => setOpen(false));
 	const history = useHistory();
 	return (
-		<Wrapper>
+		<Wrapper ref={node}>
 			<Logo className="menu-item" alt="art value logo" src={logo} onClick={() => history.push(paths[0])} />
 			<Burger open={open} setOpen={setOpen} />
 			<Menu open={open} setOpen={setOpen} tabs={tabs} paths={paths} />

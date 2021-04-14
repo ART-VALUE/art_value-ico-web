@@ -39,13 +39,13 @@ const ParamsSlide: FunctionComponent<ParamsSlideProps> = ({
                 </label>
                 <p>Checkout with:</p>
                 <button className="payment-btn" type="submit" value="creditcard" onClick={onStipeBtnClick}>
-                    <img src={process.env.PUBLIC_URL + '/icon/mastercard.svg'} />
-                    <img src={process.env.PUBLIC_URL + '/icon/visa.svg'} />
-                    <img src={process.env.PUBLIC_URL + '/icon/americanexpress.svg'} />
+                    <img src={process.env.PUBLIC_URL + '/icon/mastercard.svg'} alt="mastercard"/>
+                    <img src={process.env.PUBLIC_URL + '/icon/visa.svg'} alt="visa"/>
+                    <img src={process.env.PUBLIC_URL + '/icon/americanexpress.svg'} alt="americanexpress"/>
                 </button>
                 <button className="payment-btn" type="submit" value="crypto">
-                    <img src={process.env.PUBLIC_URL + '/icon/ethereum.svg'} />
-                    <img src={process.env.PUBLIC_URL + '/icon/bitcoin.svg'} />
+                    <img src={process.env.PUBLIC_URL + '/icon/ethereum.svg'} alt="etherum"/>
+                    <img src={process.env.PUBLIC_URL + '/icon/bitcoin.svg'} alt="bitcoin"/>
                 </button>
             </form>
         </div>
