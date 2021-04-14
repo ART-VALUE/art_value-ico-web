@@ -7,5 +7,5 @@ type StyledNavigationProps = {
 
 export const StyledNavigation = styled.div<StyledNavigationProps>`
 	${baseTitle}
-	height: ${({ viewportWidth }) => (viewportWidth < 700 ? '100px' : '50px')};
+	height: ${({ viewportWidth }) => (viewportWidth < 700 ? '85px' : '56px')};
 `;

@@ -4,8 +4,6 @@ type DesktopLinkPropsProps = {
 	activeLink: string;
 };
 
-
-
 export const DesktopWrapper = styled.div`
 	display: grid;
 	grid-gap: 1rem;
@@ -22,7 +20,7 @@ export const DesktopWrapper = styled.div`
 `;
 
 export const DesktopLink = styled.span<DesktopLinkPropsProps>`
-font-weight: ${({ activeLink }) => (activeLink === 'active' ? 'bold' : 'normal')};
+	font-weight: ${({ activeLink }) => (activeLink === 'active' ? 'bold' : 'normal')};
 	text-decoration: none;
 	&:hover {
 		opacity: 0.6;

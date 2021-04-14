@@ -7,6 +7,7 @@ import { Menu } from './Menu/Menu';
 
 const Wrapper = styled.div`
 	padding: 0;
+	height: 85px
 `;
 
 const Logo = styled.img`
