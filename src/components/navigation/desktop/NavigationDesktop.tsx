@@ -15,7 +15,7 @@ type DesktopProps = {
 export const NavigationDesktop: FunctionComponent<DesktopProps> = ({ logo, tabs, paths }) => {
 	const history = useHistory();
 	const currentRoute = useLocation();
-	console.log(currentRoute)
+
 	return (
 		<DesktopWrapper>
 			<DesktopLogo alt="art value logo" src={logo} onClick={() => history.push(paths[0])}></DesktopLogo>
