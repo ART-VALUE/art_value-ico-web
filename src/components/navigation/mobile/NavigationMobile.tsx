@@ -7,7 +7,7 @@ import { Menu } from './Menu/Menu';
 
 const Wrapper = styled.div`
 	padding: 0;
-	height: 85px
+	height: 85px;
 `;
 
 const Logo = styled.img`
@@ -16,6 +16,7 @@ const Logo = styled.img`
 	position: absolute;
 	top: 2%;
 	right: 1rem;
+	cursor: pointer;
 `;
 
 type MobileProps = {

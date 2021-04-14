@@ -1,9 +1,10 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent } from 'react';
 
-const Ico: FunctionComponent<{}> = () => {
-    return (
-        <div>ICO</div>
-    )
-}
-
-export default Ico
+export const Ico: FunctionComponent<{}> = () => {
+	/* Style tag just for testing */
+	return (
+		<div>
+			<h1 style={{ color: 'white', textTransform: 'uppercase' }}>ico landing page</h1>
+		</div>
+	);
+};

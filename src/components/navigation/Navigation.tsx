@@ -13,7 +13,7 @@ const RoutePaths: string[] = [
 	RoutingPaths.auctionView,
 	RoutingPaths.galleryView,
 	RoutingPaths.calenderView,
-	RoutingPaths.profileView,
+	RoutingPaths.myProfile,
 ];
 const NavigationPaths: ReadonlyArray<string> = RoutePaths;
 
