@@ -8,7 +8,7 @@ export const StyledMenu = styled.nav<StyledMenuProps>`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	background: gray;
+	background-color: ${(props) => props.theme.color.surface};
 	height: 100vh;
 	text-align: left;
 	padding: 2rem;
@@ -26,5 +26,6 @@ export const StyledMenu = styled.nav<StyledMenuProps>`
 		color: white;
 		text-decoration: none;
 		transition: color 0.3s linear;
+		cursor: pointer;
 	}
 `;

@@ -39,7 +39,7 @@ export const DesktopLogo = styled.img`
 
 export const NavList = styled.ul`
 	grid-area: nav;
-	place-self: center;
+	justify-self: center;
 	display: grid;
 	grid-auto-flow: column;
 	grid-auto-columns: max-content;
@@ -55,6 +55,6 @@ export const NavListItem = styled.li`
 export const User = styled.div`
 	grid-area: user;
 	justify-self: end;
-	margin-right: 0.5em;
+	margin-right: 2em;
 	cursor: pointer;
 `;
