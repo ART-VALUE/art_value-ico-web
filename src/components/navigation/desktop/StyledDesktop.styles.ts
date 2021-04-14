@@ -17,6 +17,9 @@ export const DesktopWrapper = styled.div`
 	align-items: center;
 	padding: 0;
 	border-bottom: 2px solid ${(props) => props.theme.color.border};
+	max-width:1124px;
+	margin-left: auto;
+	margin-right: auto
 `;
 
 export const DesktopLink = styled.span<DesktopLinkPropsProps>`
