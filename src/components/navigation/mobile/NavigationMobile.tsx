@@ -30,7 +30,7 @@ interface MobileState {
 /* TODO: add click on side of menu to close it */
 /*  Add styling to div*/
 
-export const HeaderMobile: FunctionComponent<MobileProps> = ({ logo, tabs, paths }) => {
+export const NavigationMobile: FunctionComponent<MobileProps> = ({ logo, tabs, paths }) => {
 	const [open, setOpen] = useState<MobileState['open']>(false);
 	const node = useRef<HTMLDivElement>(null);
 	useOnClickOutside(node, () => setOpen(false));

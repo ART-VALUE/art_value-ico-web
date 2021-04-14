@@ -1,14 +1,14 @@
 import './App.scss';
-import FlipClock from './Flipclock';
+/* import FlipClock from './Flipclock'; */
 import { loadStripe } from '@stripe/stripe-js';
 import Modal from 'react-modal';
 import PurchaseDialog from './purchaseDialog/PurchaseDialog';
-import Header from './navigation/Navigation';
+import { Navigation } from './navigation/Navigation';
 import { useState } from 'react';
 import { io } from 'socket.io-client';
 import { PAYMENT_NS } from '../api';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import PreIco from './PreIco';
+import { BrowserRouter as Router, Switch, Route, /* Link */ } from 'react-router-dom';
+/* import PreIco from './PreIco'; */
 import { ThemeProvider } from 'styled-components';
 import { darken, lighten } from 'polished';
 import Ico from './Ico';
@@ -37,7 +37,7 @@ const theme = {
 
 export default function App() {
 	const [purchaseDialogOpen, setPurchaseDialogOpen] = useState(false);
-	const endDate = new Date(1615809936000).getMilliseconds();
+	/* const endDate = new Date(1615809936000).getMilliseconds(); */
 
 	const handlePurchaseTokenClick = () => {
 		setPurchaseDialogOpen(true);
@@ -56,7 +56,7 @@ export default function App() {
 					>
 						<PurchaseDialog stripePromise={stripePromise} paymentApiIo={paymentApiIo} />
 					</Modal>
-					<Header />
+					<Navigation />
 					<Switch>
 						<Route path="/">
 							<Ico />

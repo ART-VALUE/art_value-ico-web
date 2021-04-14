@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { StyledNavigation } from './StyledNavigation.styles';
-import { HeaderDesktop } from './desktop/NavigationDesktop';
-import { HeaderMobile } from './mobile/NavigationMobile';
-import HeaderLogo from '../../assets/images/art-value-logo.webp';
+import { NavigationDesktop } from './desktop/NavigationDesktop';
+import { NavigationMobile } from './mobile/NavigationMobile';
+import NavigationLogo from '../../assets/images/art-value-logo.webp';
 import RoutingPaths from '../../routes/RoutingPaths';
 
 /* TODO: Check correct header heights for different viewports */
 
 const TabNames: string[] = ['Ongoing Auction', 'Gallery', 'Calender', 'My Profile'];
-const HeaderTabs: ReadonlyArray<string> = TabNames;
+const NavigationTabs: ReadonlyArray<string> = TabNames;
 
 const RoutePaths: string[] = [
 	RoutingPaths.homeView,
@@ -17,9 +17,9 @@ const RoutePaths: string[] = [
 	RoutingPaths.calenderView,
 	RoutingPaths.profileView,
 ];
-const HeaderPaths: ReadonlyArray<string> = RoutePaths;
+const NavigationPaths: ReadonlyArray<string> = RoutePaths;
 
-const Header = () => {
+export const Navigation = () => {
 	const [dimensions, setDimensions] = useState({
 		height: window.innerHeight,
 		width: window.innerWidth,
@@ -42,13 +42,11 @@ const Header = () => {
 
 	const handleViewportSizeChange = () => {
 		if (dimensions.width < 700) {
-			return <HeaderMobile logo={HeaderLogo} tabs={HeaderTabs} paths={HeaderPaths} />;
+			return <NavigationMobile logo={NavigationLogo} tabs={NavigationTabs} paths={NavigationPaths} />;
 		} else {
-			return <HeaderDesktop logo={HeaderLogo} tabs={HeaderTabs} paths={HeaderPaths} />;
+			return <NavigationDesktop logo={NavigationLogo} tabs={NavigationTabs} paths={NavigationPaths} />;
 		}
 	};
 
 	return <StyledNavigation viewportWidth={dimensions.width}>{handleViewportSizeChange()}</StyledNavigation>;
 };
-
-export default Header;
