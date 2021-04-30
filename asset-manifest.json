@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7c7fb458.chunk.css",
+    "main.js": "/static/js/main.6895a195.chunk.js",
+    "main.js.map": "/static/js/main.6895a195.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.c35c36f7.js",
+    "runtime-main.js.map": "/static/js/runtime-main.c35c36f7.js.map",
+    "static/js/2.1fa45ec5.chunk.js": "/static/js/2.1fa45ec5.chunk.js",
+    "static/js/2.1fa45ec5.chunk.js.map": "/static/js/2.1fa45ec5.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.7c7fb458.chunk.css.map": "/static/css/main.7c7fb458.chunk.css.map",
+    "static/js/2.1fa45ec5.chunk.js.LICENSE.txt": "/static/js/2.1fa45ec5.chunk.js.LICENSE.txt",
+    "static/media/VerifyTxSlide.scss": "/static/media/Avenir_95_Black.c4c0440c.woff",
+    "static/media/art-value-logo.9d22a3e9.webp": "/static/media/art-value-logo.9d22a3e9.webp"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c35c36f7.js",
+    "static/js/2.1fa45ec5.chunk.js",
+    "static/css/main.7c7fb458.chunk.css",
+    "static/js/main.6895a195.chunk.js"
+  ]
+}

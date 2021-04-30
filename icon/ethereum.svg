@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="479.99" height="300" enable-background="new 0 0 1920 1920" version="1.1" viewBox="0 0 479.99 300" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><metadata><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><script/>
+<path d="m479.98 283.95c0 8.8348-7.2149 16.051-16.051 16.051h-447.88c-8.8359 0-16.051-7.2159-16.051-16.051v-267.89c0-8.8358 7.2148-16.052 16.051-16.052h447.89c8.8358 0 16.051 7.2159 16.051 16.052v267.89z" fill="#d3daf9" stroke-width=".99998"/><g transform="matrix(.11269 0 0 .11269 131.82 41.819)">
+	<polygon points="420.1 976.3 959.8 731 959.8 80.7" fill="#8a92b2"/>
+	<polygon points="420.1 976.3 959.8 1295.4 959.8 731" fill="#62688f"/>
+	<polygon points="959.8 80.7 959.8 731 1499.6 976.3" fill="#62688f"/>
+	<polygon points="1499.6 976.3 959.8 731 959.8 1295.4" fill="#454a75"/>
+	<polygon points="959.8 1839.3 959.8 1397.6 420.1 1078.7" fill="#8a92b2"/>
+	<polygon points="959.8 1839.3 1499.9 1078.7 959.8 1397.6" fill="#62688f"/>
+</g>
+</svg>
