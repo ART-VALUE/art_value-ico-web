@@ -1,4 +1,4 @@
-name: NPM build CI
+name: GH pages build CI
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
     - run: npm install
     - run: npm run build
     - name: Deploy
-      uses: s0/git-publish-subdir-action@v2
+      uses: s0/git-publish-subdir-action@v2.4.0
       env:
         REPO: self
         BRANCH: gh-pages
