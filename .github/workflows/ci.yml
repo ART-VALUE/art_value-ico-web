@@ -19,6 +19,8 @@ jobs:
         node-version: 16
     - run: npm install
     - run: npm run build
+      env:
+        CI: false
     - name: Deploy
       uses: s0/git-publish-subdir-action@v2.4.0
       env:
