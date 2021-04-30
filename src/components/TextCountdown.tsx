@@ -44,7 +44,7 @@ const deltaPartsWithChange = (deltaPartsOld: DeltaParts, deltaPartsNew: DeltaPar
 const BigNumber = styled.span`
     font-family: "Avenir95Black";
     color: white;
-    font-size: 150pt;
+    font-size: 80pt;
 `
 
 export const TextClock: FunctionComponent<FlipClockProps> = ({date}) => {
