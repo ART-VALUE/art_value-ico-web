@@ -30,11 +30,11 @@ const Button = styled.button`
 const StripeSlide: FunctionComponent<{
   checkoutId: number,
   checkoutDoneHandler: (avTransactionId: string) => void,
-  paymentApiIo: Socket,
+  io: Socket,
   stripePromise: Promise<Stripe | null>,
   amount: BN,
   address: string
-}> = ({ checkoutId, checkoutDoneHandler, paymentApiIo, stripePromise, amount, address }) => {
+}> = ({ checkoutId, checkoutDoneHandler, io, stripePromise, amount, address }) => {
   const [succeeded, setSucceeded] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [processing, setProcessing] = useState(false)
@@ -42,7 +42,7 @@ const StripeSlide: FunctionComponent<{
   const stripeElements = useElements()!
   const qStripeInitData = useQuery<StripeInitData, string>(
     ['purchase', 'stripeInit', checkoutId],
-    () => purchaseApi.stripeInit(paymentApiIo, amount, address)
+    () => purchaseApi.create(io, amount, address)
   )
   console.log(qStripeInitData)
 

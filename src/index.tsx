@@ -5,7 +5,59 @@ import App from './components/App'
 import { getAccounts, web3 } from './portis'
 import { TransactionConfig } from 'web3-eth'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { io, Socket } from 'socket.io-client'
+import { asyncApiCall, NamedApiException } from './api'
+import { DefaultEventsMap } from 'socket.io-client/build/typed-events'
 
+const API_BASE = 'http://localhost:3000'
+
+function createIo(ns: string) {
+  return io(`${API_BASE}/${ns}`, {
+    withCredentials: true
+  });
+}
+
+interface Ios {
+  auth: Socket,
+  transaction: Socket
+}
+
+function createIos(): Ios {
+  return {
+    auth: createIo('auth'),
+    transaction: createIo('transaction')
+  }
+}
+
+const getUuid = async (ios: Ios) => {
+  await fetch('http://localhost:3000/api/init-session', {
+    credentials: 'include'
+  })
+  
+  try {
+    const uuid = await asyncApiCall<any, string>(ios.auth, 'me', {})
+    console.log('Whoami done.')
+    console.log(uuid)
+  } catch (error) {
+    if (error instanceof NamedApiException && error.originalName === 'NotLoggedInException') {
+      console.info('trying to authenticate...')
+      const authenticateResult = await asyncApiCall<any, string>(ios.auth, 'authenticate', {
+        id: 50
+      })
+      console.info(authenticateResult)
+      const uuid = await asyncApiCall<any, string>(ios.auth, 'me', {})
+      console.log('Whoami after authn done.')
+      console.log(uuid)
+      return
+    } else {
+      throw error
+    }
+  }
+}
+
+const ios = createIos()
+
+getUuid(ios)
 const queryClient = new QueryClient()
 
 ReactDOM.render(

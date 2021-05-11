@@ -1,27 +1,72 @@
 import { Socket } from "socket.io-client";
 
-export const PAYMENT_NS = "payment"
+const DEFAULT_API_CALL_TIMEOUT = 7000
 
-type ApiResponse<T> = {
-    success: true,
-    data: T
+export type ApiResult<T> = {
+  data: T,
+  error: null
 } | {
-    success: false,
-    errorMsg: string
+  error: {
+    name: string | null,
+    message: string
+  }
 }
 
-export function asyncApiCall<I, O>(socket: Socket, ev: string, data: I) {
-    return new Promise<O>((resolve, reject) => {
-        socket.emit(
-            ev,
-            data,
-            (msg: ApiResponse<O>) => {
-                if (msg.success) {
-                    resolve(msg.data)
-                } else {
-                    reject(msg.errorMsg)
-                }
-            }
-        );
-    })
+export abstract class ApiException extends Error {
+  constructor(message?: string) {
+    super(message)
+    this.name = 'ApiException'
+  }
+}
+
+export class ApiCallTimeoutException extends ApiException {
+  constructor(message?: string) {
+    super(message)
+    this.name = 'ApiCallTimeoutException'
+  }
+}
+
+export class UnknownApiException extends ApiException {
+  constructor(message: string) {
+    super(message)
+    this.name = 'UnknownApiException'
+  }
+}
+
+export class NamedApiException extends ApiException {
+  originalName: string
+  originalMessage: string
+
+  constructor(name: string, message: string) {
+    super(`${name}: ${message}`)
+    this.name = 'NamedApiException'
+    this.originalMessage = message
+    this.originalName = name
+  }
+}
+
+export function asyncApiCall<I, O>(
+  socket: Socket,
+  ev: string,
+  data: I,
+  timeout = DEFAULT_API_CALL_TIMEOUT
+) {
+  return new Promise<O>((resolve, reject) => {
+    setTimeout(() => reject(new ApiCallTimeoutException()), timeout)
+    socket.emit(
+      ev,
+      data,
+      (msg: ApiResult<O>) => {
+        if (msg.error == null) {
+          resolve(msg.data)
+        } else {
+          if (msg.error.name == null) {
+            reject(new UnknownApiException(msg.error.message))
+          } else {
+            reject(new NamedApiException(msg.error.name, msg.error.message))
+          }
+        }
+      }
+    );
+  })
 }
