@@ -6,6 +6,7 @@ export type ApiResult<T> = {
   data: T,
   error: null
 } | {
+  data: null,
   error: {
     name: string | null,
     message: string
@@ -45,10 +46,10 @@ export class NamedApiException extends ApiException {
   }
 }
 
-export function asyncApiCall<I, O>(
+export function asyncApiCall<I = null, O = null>(
   socket: Socket,
   ev: string,
-  data: I,
+  data: I | null = null,
   timeout = DEFAULT_API_CALL_TIMEOUT
 ) {
   return new Promise<O>((resolve, reject) => {

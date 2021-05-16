@@ -1,17 +1,3 @@
-import Portis from "@portis/web3"
-import Web3 from "web3"
-
-export const portis = new Portis(
-  `79582b9a-9e5b-4ae6-b7ec-643a28136c09`,
-  `rinkeby`, { scope: ['email'] }
-)
-
-export const web3 = new Web3(portis.provider);
-
-export const getAccounts = async() => { return await web3.eth.getAccounts() };
-
-// export const getContract = async() => { return await buildContractInstance({web3}) };
-
 export const web3networks = {
   "1": {
     name: "Ethereum",

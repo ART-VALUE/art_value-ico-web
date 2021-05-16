@@ -7,9 +7,9 @@ import {
 import { Stripe, StripeCardElementChangeEvent } from "@stripe/stripe-js"
 import './StripeSlide.sass'
 import { Socket } from "socket.io-client"
-import * as purchaseApi from "../../api/purchase"
+import * as purchaseApi from "../../service/api/purchase"
 import BN from "bn.js"
-import { StripeInitData } from "../../api/purchase"
+import { StripeInitData } from "../../service/api/purchase"
 import { useQuery } from "react-query"
 import styled from "styled-components"
 import LoadingRing from "../LoadingRing"

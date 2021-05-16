@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react"
 import "./WalletSlide.scss"
-import { getAccounts } from "../../portis"
+// import { getAccounts } from "../../portis"
 import LoadingRing from "../LoadingRing"
 
 type WalletSlideProps = {
@@ -20,8 +20,8 @@ const WalletSlide: FunctionComponent<WalletSlideProps> = ({
     const portisOnClick = async (e: React.MouseEvent) => {
         e.preventDefault()
         setLoadingAccounts(true)
-        const accounts = await getAccounts()
-        onWalletConnected(accounts[0])
+        // const accounts = await getAccounts()
+        // onWalletConnected(accounts[0])
     }
 
     return (

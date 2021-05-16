@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react"
 import { Socket } from "socket.io-client"
-import * as purchaseApi from "../../api/purchase"
+import * as purchaseApi from "../../service/api/purchase"
 import LoadingRing from "../LoadingRing"
 import "./VerifyTxSlide.scss"
 
