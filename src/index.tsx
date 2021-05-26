@@ -1,90 +1,75 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './components/App'
-import { TransactionConfig } from 'web3-eth'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { io, Socket } from 'socket.io-client'
-import { asyncApiCall, NamedApiException } from './service/api'
-import { authenticateThroughPortis } from './service/api/auth'
-import Web3 from 'web3'
-import { createWeb3Wrapper, Web3Wrapper } from './service/eth/Web3Wrapper'
+import App from './ui/components/App'
+import { QueryClient, QueryClientProvider, setLogger as setQueryLogger } from 'react-query'
+import { DefaultTheme, ThemeProvider } from 'styled-components'
+import AlertTemplate from './ui/components/AlertTemplate'
+import { AlertProviderProps, positions, transitions, Provider as AlertProvider } from 'react-alert'
+import { darken, lighten } from 'polished'
+import { isErrorProcessed } from './util'
+import { loadStripe } from '@stripe/stripe-js'
+import Modal from "react-modal";
 
-const API_BASE = 'http://localhost:3000'
+const colorBackground = '#0a0a0a';
 
-function createIo(ns: string) {
-  return io(`${API_BASE}/${ns}`, {
-    withCredentials: true
-  });
+const theme: DefaultTheme = {
+	color: {
+		background: colorBackground,
+		surface: lighten(0.2, colorBackground),
+		border: lighten(0.4, colorBackground),
+		text: darken(0.1, '#fff'),
+    info: '#2c90be',
+    success: '#53b953',
+    error: '#a73e3e',
+    link: '#2c90be',
+    linkVisited: '#1d5975',
+    linkHover: '#5695b3',
+    linkActive: '#367ea0',
+	},
+	font: {
+		text: 'Avenir95Light',
+		title: 'Avenir95Black',
+	},
 }
 
-interface Ios {
-  auth: Socket,
-  transaction: Socket
-}
+const stripePromise = loadStripe(
+  'pk_test_51ITna8JcDKL67QxNOgLJSMRVqFGagqi7pcHXCtewhqPyxqsWt5QrIWLeCoWXTZlZIi2gOhNSh3JE4M6Rr40VFhSJ00cmqxUD2d'
+)
 
-function createIos(): Ios {
-  return {
-    auth: createIo('auth'),
-    transaction: createIo('transaction')
-  }
-}
+Modal.setAppElement('#root')
 
-const getUuid = async (ios: Ios, web3Wrapper: Web3Wrapper) => {
-  await fetch('http://localhost:3000/api/init-session', {
-    credentials: 'include'
-  })
-  
-  try {
-    const uuid = await asyncApiCall<null, string>(ios.auth, 'me')
-    console.log('Whoami done.')
-    console.log(uuid)
-  } catch (error) {
-    if (error instanceof NamedApiException && error.originalName === 'NotLoggedInException') {
-      console.info('trying to authenticate...')
-      const authenticateResult = await authenticateThroughPortis(ios.auth, web3Wrapper)
-      console.info(authenticateResult)
-      const uuid = await asyncApiCall<null, string>(ios.auth, 'me')
-      console.log('Whoami after authn done.')
-      console.log(uuid)
-      return
-    } else {
-      throw error
-    }
-  }
-}
-
-const ios = createIos()
-const web3 = createWeb3Wrapper('portis')
-
-getUuid(ios, web3)
 const queryClient = new QueryClient()
+setQueryLogger({
+  error: (...args) => {
+    if (!isErrorProcessed(args[0])) console.error.apply(console, args)
+  },
+  log: console.log,
+  warn: console.warn
+})
+
+interface AlertProviderOptions extends Omit<AlertProviderProps, 'template'> { }
+
+const alertOptions: AlertProviderOptions = {
+  position: positions.TOP_RIGHT,
+  timeout: 5000,
+  offset: '30px',
+  transition: transitions.SCALE
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
+    <ThemeProvider theme={theme}>
+      <AlertProvider template={AlertTemplate} {...alertOptions}>
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </AlertProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
 
-const getCurrentGasPrices = async () => {
-  const res = await fetch('https://ethgasstation.info/json/ethgasAPI.json')
-  const resData = await res.json()
-  let prices = {
-    low: resData.safeLow / 10,
-    medium: resData.average / 10,
-    high: resData.fast / 10
-  }
- 
-  console.log (`Current ETH Gas Prices (in GWEI):`)
-  console.log(`Low: ${prices.low} (transaction completes in < 30 minutes)`)
-  console.log(`Standard: ${prices.medium} (transaction completes in < 5 minutes)`)
-  console.log(`Fast: ${prices.high} (transaction completes in < 2 minutes)`)
- 
-  return prices
-}
 
 // async function portisTest() {
 //   const accounts = await getAccounts()

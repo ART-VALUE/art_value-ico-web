@@ -2,14 +2,6 @@ import BN from "bn.js";
 import { Socket } from "socket.io-client";
 import { asyncApiCall } from ".";
 
-export type ApiResponse<T> = {
-  success: true,
-  data: T
-} | {
-  success: false,
-  errorMsg: string
-}
-
 export interface StripeInitData {
   clientSecret: string,
   avTxId: string

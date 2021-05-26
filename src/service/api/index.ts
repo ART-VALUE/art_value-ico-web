@@ -46,6 +46,22 @@ export class NamedApiException extends ApiException {
   }
 }
 
+export function parseApiResult<T>(apiResponse: ApiResult<T>) {
+  if (apiResponse.error == null) {
+    return apiResponse.data
+  } else {
+    if (apiResponse.error.name == null) {
+      throw new UnknownApiException(apiResponse.error.message)
+    } else {
+      throw new NamedApiException(apiResponse.error.name, apiResponse.error.message)
+    }
+  }
+}
+
+export function isNamedApiException(error: any, name: string) {
+  return error instanceof NamedApiException && error.originalName === name
+}
+
 export function asyncApiCall<I = null, O = null>(
   socket: Socket,
   ev: string,
@@ -58,14 +74,10 @@ export function asyncApiCall<I = null, O = null>(
       ev,
       data,
       (msg: ApiResult<O>) => {
-        if (msg.error == null) {
-          resolve(msg.data)
-        } else {
-          if (msg.error.name == null) {
-            reject(new UnknownApiException(msg.error.message))
-          } else {
-            reject(new NamedApiException(msg.error.name, msg.error.message))
-          }
+        try {
+          resolve(parseApiResult(msg))
+        } catch (error) {
+          reject(error)
         }
       }
     );
