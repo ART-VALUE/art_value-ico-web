@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { useCurrentUserDetails } from "../../../contexts";
 import Wallet from "../../../service/eth/Wallet";
 import { UserDto } from "../../../service/model/User";
@@ -16,16 +16,23 @@ const LoginSlides: FunctionComponent<{
   const { currentUser } = useCurrentUserDetails()
   const [carouselIndex, setCarouselIndex] = useState(0)
   const [chosenWallet, setChosenWallet] = useState<Wallet | null>(null)
+  const [callbackCalled, setCallbackCalled] = useState(false)
+
+  useEffect(() => {
+    if (!callbackCalled && currentUser != null) {
+      setCallbackCalled(true)
+      onLoggedIn(currentUser)
+    }
+  }, [currentUser])
 
   if (currentUser != null) {
-    onLoggedIn(currentUser)
     return <P>Logged in as {currentUser.uuid}</P>
   }
 
   return (<Carousel currentIndex={carouselIndex}>{[
     <LogInUsingSessionSlide
       key={LogInUsingSessionSlide.name}
-      onLoggedIn={onLoggedIn}
+      onLoggedIn={() => {}}
       onNotLoggedIn={() => setCarouselIndex(old => Math.max(old, 1)) } />,
     <SelectWalletSlide
       key={SelectWalletSlide.name}

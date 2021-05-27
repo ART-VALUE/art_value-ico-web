@@ -3,6 +3,7 @@ import { FunctionComponent } from "react"
 import { MainWrapper, Main, Section } from "../style/grouping"
 import { H1, H2 } from "../style/text"
 import CurrentUserInfo from "./auth/CurrentUserInfo"
+import LogOut from "./auth/LogOut"
 import DepositsTable from "./DepositsTable"
 
 const Profile: FunctionComponent<{}> = () => {
@@ -16,6 +17,10 @@ const Profile: FunctionComponent<{}> = () => {
       <Section>
         <H2>Deposits</H2>
         <DepositsTable />
+      </Section>
+      <Section>
+        <H2>Log out</H2>
+        <LogOut />
       </Section>
     </Main>
   </MainWrapper>)

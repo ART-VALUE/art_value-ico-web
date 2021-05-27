@@ -1,6 +1,6 @@
 import { Socket } from "socket.io-client";
 import Web3 from "web3";
-import { asyncApiCall } from ".";
+import { ApiResult, asyncApiCall, parseApiResult } from ".";
 import { tryRetrow } from "../../util";
 import Wallet from "../eth/Wallet";
 import { UserDto } from "../model/User";
@@ -62,3 +62,13 @@ export async function signUp(
 
   return user
 }
+
+export async function logOut(base: string) {
+  const res = await fetch(`${base}/logout`, {
+    method: 'POST',
+    credentials: 'include'
+  })
+  const apiResult = await res.json() as ApiResult<null>
+  return parseApiResult(apiResult)
+}
+
