@@ -8,8 +8,9 @@ import Wallet from "../../../service/eth/Wallet";
 import Web3 from "web3";
 import SignupForm from "./SignupForm";
 import { ErrorP } from "../../style/error";
-import { H2, P } from "../../style/text";
+import { H2, P, SpanItalic } from "../../style/text";
 import GenericError from "../GenericError";
+import { Button } from "../../style/button";
 
 const SignUpSlide: FunctionComponent<{
   wallet: Wallet,
@@ -31,29 +32,45 @@ const SignUpSlide: FunctionComponent<{
     }
   }, [signUpMutation])
 
-  if (signUpMutation.isLoading) {
-    return <>
-      <H2>Signing you up...</H2>
-      <LoadingRing />
-    </>
-  } else if (signUpMutation.isError) {
-    return <>
-      <GenericError error={signUpMutation.error}>
-        An error occured while signing you up
-      </GenericError>
-      {email != null
-        ? <button onClick={() => signUpMutation.mutateAsync(email)}>Try again</button>
-        : <></>
+  return <>
+    <H2>Sign up</H2>
+    <P>
+      Your Ethereum wallet isn't connected to an Art Value account yet.
+      Enter your email address to create an account.
+    </P>
+    <P>
+      All future assets (like ARTS or Number NFT's) will
+      be send to this wallet's address ({wallet.address}).
+    </P>
+    {(() => {
+      if (signUpMutation.isLoading) {
+        return <>
+          <P>Signing you up...</P>
+          <P><SpanItalic>
+            Your crypto wallet may ask for your permission. If so, accept the prompt.
+          </SpanItalic></P>
+          <LoadingRing />
+        </>
+      } else if (signUpMutation.isError) {
+        return <>
+          <GenericError error={signUpMutation.error}>
+            An error occured while signing you up
+          </GenericError>
+          {email != null
+            ? <Button onClick={() => signUpMutation.mutateAsync(email)}>Try again</Button>
+            : <></>
+          }
+        </>
+      } else if (signUpMutation.isSuccess) {
+        return <P>Logged in as {signUpMutation.data!!.uuid}</P>
       }
-    </>
-  } else if (signUpMutation.isSuccess) {
-    return <P>Logged in as {signUpMutation.data!!.uuid}</P>
-  }
-  
-  return <SignupForm onFormComplete={email => {
-    setEmail(email)
-    signUpMutation.mutateAsync(email)
-  }} />
+      
+      return <SignupForm onFormComplete={email => {
+        setEmail(email)
+        signUpMutation.mutateAsync(email)
+      }} />
+    })()}
+  </>
 }
 
 export default SignUpSlide

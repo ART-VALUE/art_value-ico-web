@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
-import { Label } from "../../style/form";
+import { Button } from "../../style/button";
+import { Input, Label } from "../../style/form";
 
 const SignupForm: FunctionComponent<{
   onFormComplete: (email: string) => void
@@ -12,14 +13,14 @@ const SignupForm: FunctionComponent<{
   }}>
     <Label>
       Email
-      <input
+      <Input
         type="text"
         placeholder="john.doe@example.com"
         onChange={e => setEmail(e.target.value)} />
     </Label>
-    <button type="submit" value="portis">
+    <Button type="submit" value="portis">
       Sign up
-    </button>
+    </Button>
   </form>)
 }
 
