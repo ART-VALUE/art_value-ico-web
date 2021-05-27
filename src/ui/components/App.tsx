@@ -1,7 +1,7 @@
 import { Routes } from '../../routes/Routes';
 import { Navigation } from './navigation/Navigation';
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { IosContext, CurrentUserContextData, CurrentUserContext, WalletsContext, WalletsProviderData } from '../../contexts';
+import { IosContext, CurrentUserContextData, CurrentUserContext, WalletsContext, WalletsProviderData, RestContext, RestData } from '../../contexts';
 import { createIos } from '../../service/api/io';
 import { UserDto } from '../../service/model/User';
 import { useAlert } from 'react-alert';
@@ -18,6 +18,9 @@ import { modalStyle } from '../style/modal';
 const apiBase = 'http://localhost:3000'
 const restApiBase = `${apiBase}/api`
 const ios = createIos(apiBase)
+const rest: RestData = {
+  base: restApiBase
+}
 const SESSION_HEARTBEAT_INTERVAL = 10000
 
 const PageWrapperDiv = styled.div`
@@ -58,6 +61,7 @@ const App: FunctionComponent<{}> = () => {
     setCurrentUser: currentUser => {
       setCurrentUser(currentUser)
     },
+    nullCurrentUser: () => setCurrentUser(null),
     launchLoginModal: () => {
       setLoginDialogOpen(true)
     }
@@ -69,27 +73,29 @@ const App: FunctionComponent<{}> = () => {
   }
 
   return (
-    <IosContext.Provider value={ios}>
-      <WalletsContext.Provider value={web3WrapperContextData}>
-        <CurrentUserContext.Provider value={currentUserContextData}>
-          <PageWrapperDiv>
-            <Routes>
-              <Navigation />
-            </Routes>
+    <RestContext.Provider value={rest}>
+      <IosContext.Provider value={ios}>
+        <WalletsContext.Provider value={web3WrapperContextData}>
+          <CurrentUserContext.Provider value={currentUserContextData}>
+            <PageWrapperDiv>
+              <Routes>
+                <Navigation />
+              </Routes>
 
-            <Modal
-              style={modalStyle(theme)}
-              isOpen={loginDialogOpen}
-              contentLabel="Login Dialog"
-              shouldCloseOnOverlayClick={true}>
-              <LoginSlides onLoggedIn={() => {
-                setLoginDialogOpen(false)
-              }} />
-            </Modal>
-          </PageWrapperDiv>
-        </CurrentUserContext.Provider>
-      </WalletsContext.Provider>
-    </IosContext.Provider>
+              <Modal
+                style={modalStyle(theme)}
+                isOpen={loginDialogOpen}
+                contentLabel="Login Dialog"
+                shouldCloseOnOverlayClick={true}>
+                <LoginSlides onLoggedIn={() => {
+                  setLoginDialogOpen(false)
+                }} />
+              </Modal>
+            </PageWrapperDiv>
+          </CurrentUserContext.Provider>
+        </WalletsContext.Provider>
+      </IosContext.Provider>
+    </RestContext.Provider>
   );
 }
 

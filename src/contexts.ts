@@ -11,6 +11,18 @@ export function useIos() {
   return ios
 }
 
+export type RestData = {
+  base: string
+}
+
+export const RestContext = createContext<RestData | null>(null)
+
+export function useRest() {
+  const rest = useContext(RestContext)
+  if (rest == null) throw new Error('RestContext is not initialized')
+  return rest
+}
+
 export interface WalletsProviderData {
   wallets: Set<Wallet>,
   setWallets: (setter: (currentWallets: Set<Wallet>) => Set<Wallet>) => void
@@ -27,6 +39,7 @@ export function useWallets() {
 export interface CurrentUserContextData {
   currentUser: UserDto | null,
   setCurrentUser: (currentUser: UserDto) => void,
+  nullCurrentUser: () => void, // To avoid type confusion
   launchLoginModal: () => void
 }
 
