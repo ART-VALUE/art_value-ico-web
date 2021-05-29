@@ -9,7 +9,7 @@ import LoadingRing from "../LoadingRing";
 import { TransactionReceipt } from "web3-core";
 import { MINIMUM_CONFIRMATIONS } from "../../../constants";
 import { ErrorP } from "../../style/error";
-import { A, H2, MonoData, P, Pre } from "../../style/text";
+import { A, H2, MonoData, P, Pre, SpanItalic } from "../../style/text";
 import { weiToEtherStr } from "../../../service/eth/util";
 import { HorizontalCenter } from "../../style/grouping";
 import Loading from "../Loading";
@@ -50,6 +50,7 @@ const PayUsingWalletSlide: FunctionComponent<{
             If so, accept the prompt to continue.
           </P>
           <Loading><P>Paying...</P></Loading>
+          <P><SpanItalic>This may take a while, your wallet needs to submit the transaction to the network.</SpanItalic></P>
         </>
       } else if (qPaymentMutation.isError) {
         return <>
@@ -60,7 +61,7 @@ const PayUsingWalletSlide: FunctionComponent<{
             Only try again if you know the transaction failed!
             To get refunded if the transaction did go through, please contact us.
           </P>
-          <button onClick={() => qPaymentMutation.mutate()}>Try again</button>
+          <Button onClick={() => qPaymentMutation.mutate()}>Try again</Button>
         </>
       } else if (qPaymentMutation.isSuccess) {
         const txHash = qPaymentMutation.data!!.transactionHash
