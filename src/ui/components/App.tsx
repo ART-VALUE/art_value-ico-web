@@ -14,8 +14,10 @@ import LoginSlides from './auth/LoginSlides';
 import { sessionHeartbeat } from '../../service/api/session';
 import '../style/page.scss';
 import { modalStyle } from '../style/modal';
+import { isDev } from '../../env';
 
-const apiBase = 'http://localhost:3000'
+const apiBase = isDev ? 'http://localhost:3000' : 'https://art-value-ico-api.herokuapp.com'
+console.info(`Art Value ICO - ${isDev ? 'dev' : 'prod'} - API base: ${apiBase}`)
 const restApiBase = `${apiBase}/api`
 const ios = createIos(apiBase)
 const rest: RestData = {
