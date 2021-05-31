@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 
 type FlipClockProps = {
@@ -41,14 +41,33 @@ const deltaPartsWithChange = (deltaPartsOld: DeltaParts, deltaPartsNew: DeltaPar
   new: deltaPartsNew
 })
 
-const BigNumber = styled.span`
+const BigNumber = styled.div`
   font-family: "Avenir95Black";
   color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`
+
+const NumberPartContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+`
+
+const NumberPartLabel = styled.span`
+  display: inline-block;
+  text-align: left;
+`
+
+const NumberPartSeperator = styled.span`
   font-size: 80pt;
 `
 
 const NumberPart = styled.span`
+  font-size: 80pt;
   display: inline-block;
+  margin-bottom: -0.2em;
 `
 
 export const TextClock: FunctionComponent<FlipClockProps> = ({date}) => {
@@ -71,26 +90,34 @@ export const TextClock: FunctionComponent<FlipClockProps> = ({date}) => {
     }
   })
 
-  return (
-    <div className={'flipClock'}>
-      <BigNumber>
-        <NumberPart>
-          {tMinusParts.new.isNegative ? '-' : ''}
-          {tMinusParts.new.days.toString().padStart(3, '0')}
-        </NumberPart>
-        :
-        <NumberPart>
-          {tMinusParts.new.hoursOfDay.toString().padStart(2, '0')}
-        </NumberPart>
-        :
-        <NumberPart>
-          {tMinusParts.new.minutesOfHour.toString().padStart(2, '0')}
-        </NumberPart>
-        :
-        <NumberPart>
-          {tMinusParts.new.secondsOfMinute.toString().padStart(2, '0')}
-        </NumberPart>
-      </BigNumber>
-    </div>
-  )
+  return <BigNumber>
+    <NumberPartContainer>
+      <NumberPart>
+        {tMinusParts.new.isNegative ? '-' : ''}
+        {tMinusParts.new.days.toString().padStart(3, '0')}
+      </NumberPart>
+      <NumberPartLabel>days</NumberPartLabel>
+    </NumberPartContainer>
+    <NumberPartSeperator>:</NumberPartSeperator>
+    <NumberPartContainer>
+      <NumberPart>
+        {tMinusParts.new.hoursOfDay.toString().padStart(2, '0')}
+      </NumberPart>
+      <NumberPartLabel>hours</NumberPartLabel>
+    </NumberPartContainer>
+    <NumberPartSeperator>:</NumberPartSeperator>
+    <NumberPartContainer>
+      <NumberPart>
+        {tMinusParts.new.minutesOfHour.toString().padStart(2, '0')}
+      </NumberPart>
+      <NumberPartLabel>minutes</NumberPartLabel>
+    </NumberPartContainer>
+    <NumberPartSeperator>:</NumberPartSeperator>
+    <NumberPartContainer>
+      <NumberPart>
+        {tMinusParts.new.secondsOfMinute.toString().padStart(2, '0')}
+      </NumberPart>
+      <NumberPartLabel>seconds</NumberPartLabel>
+    </NumberPartContainer>
+  </BigNumber>
 }

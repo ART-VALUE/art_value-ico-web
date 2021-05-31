@@ -46,6 +46,11 @@ const LogInUsingWalletSlide: FunctionComponent<{
 
   return <>
     <H2>Sign the authentication code to log in</H2>
+    <P>
+      By signing the authentication code we can make sure that you control 
+      this crypto wallet. This way we know any tokens you might purchase will 
+      be sent to the right wallet.
+    </P>
     {(() => {
       if (qAuthenticateMutation.isLoading) {
         return <>
@@ -70,7 +75,10 @@ const LogInUsingWalletSlide: FunctionComponent<{
       }
     
       return <>
-        <P>To log in using your Ethereum wallet, you need to sign the Art Value authentication code</P>
+        <P>
+          Sign the Art Value authentication code to log in using your 
+          Ethereum wallet.
+        </P>
         <Button onClick={() => qAuthenticateMutation.mutate()}>Sign</Button>
       </>
     })()}

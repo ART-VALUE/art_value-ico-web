@@ -1,15 +1,10 @@
-import { faCheck, faInfoCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { FunctionComponent, useState } from "react";
-import { useQuery } from "react-query";
-import styled, { useTheme } from "styled-components";
+import { FunctionComponent } from "react";
 import { useCurrentUserDetails } from "../../../contexts";
-import { Button } from "../../style/button";
+import { ErrorP } from "../../style/error";
 import { MonoData, P, SpanItalic } from "../../style/text";
 
 const CurrentUserInfo: FunctionComponent<{}> = () => {
-  const { currentUser, launchLoginModal } = useCurrentUserDetails()
-  const theme = useTheme()
+  const { currentUser } = useCurrentUserDetails()
 
   if (currentUser != null) {
     return <>
@@ -24,10 +19,7 @@ const CurrentUserInfo: FunctionComponent<{}> = () => {
     </>
   }
 
-  return <>
-    <P>You need to be logged in to view your user info.</P>
-    <Button onClick={() => launchLoginModal()}>Log in</Button>
-  </>
+  return <ErrorP>You need to be logged in to view your user info.</ErrorP>
 }
 
 export default CurrentUserInfo

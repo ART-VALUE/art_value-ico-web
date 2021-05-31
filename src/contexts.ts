@@ -40,7 +40,7 @@ export interface CurrentUserContextData {
   currentUser: UserDto | null,
   setCurrentUser: (currentUser: UserDto) => void,
   nullCurrentUser: () => void, // To avoid type confusion
-  launchLoginModal: () => void
+  loginByModal: () => void
 }
 
 export const CurrentUserContext = createContext<CurrentUserContextData | null>(null)

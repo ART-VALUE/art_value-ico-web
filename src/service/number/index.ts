@@ -1,19 +1,22 @@
 import BN from "bn.js";
 import trimEnd from "lodash/trimEnd";
+import { FrationalPartTooLargeException, InvalidCharacterException, TooManyDecimalSeperatorsException } from "./exceptions";
 
-export const AMOUNT_TO_FRACTIONLESS_FACTOR = 100 // amount 824.12 euro * 100 = 82412 fractionless euro
-
-const replaceAll = (needle: string, str: string, replacement = '') => str.split(needle).join(replacement)
-
-export const amountToFractionlessFactorBn = new BN(AMOUNT_TO_FRACTIONLESS_FACTOR)
+export const TWO_NBRO_FRACTION_DIGITS = 2 // 824.12 => 824 + 12 * 100 = 82412 fractionless
 const decimalSeperatorRegex = /[\.\,]/g
 const nonNumericRegex = /[^$,.\d]/
 const containsNonNumerics = (string: string) => string.match(nonNumericRegex) !== null
 export const browserDecimalSeparator = (1.1).toLocaleString().substring(1, 2)
+export const toFractionFactor = (nbroFractionDigits: number) => new BN(10).pow(new BN(nbroFractionDigits))
 
-export function fractionlessToString(number: BN) {
-  const integerPart = number.div(amountToFractionlessFactorBn)
-  const fractionalPart = number.sub(integerPart.mul(amountToFractionlessFactorBn))
+export function fractionlessToString(
+  number: BN,
+  maxNbroFractionDigits = TWO_NBRO_FRACTION_DIGITS
+) {
+  const fractionFactor = toFractionFactor(maxNbroFractionDigits)
+
+  const integerPart = number.div(fractionFactor)
+  const fractionalPart = number.sub(integerPart.mul(fractionFactor))
   const integerPartStr = integerPart.toString(10)
   const fractionalPartStr = trimEnd(fractionalPart.toString(10), '0')
   if (fractionalPart.isZero()) {
@@ -23,42 +26,48 @@ export function fractionlessToString(number: BN) {
   }
 }
 
-export class NumberFormatException extends Error {
-  constructor(message: string) {
-    super(message)
-    this.name = 'NumberFormatException'
-  }
-}
-
-export class TooManyDecimalSeperatorsException extends NumberFormatException {
-  constructor(message: string) {
-    super(message)
-    this.name = 'TooManyDecimalSeperatorsException'
-  }
-}
-
-export class InvalidCharacterException extends NumberFormatException {
-  constructor(message: string) {
-    super(message)
-    this.name = 'InvalidCharacterException'
-  }
-}
-
 export function fractionlessNumberFromString(
-  string: string,
-  decimalSeperator = browserDecimalSeparator
+  numberString: string,
+  decimalSeperator = browserDecimalSeparator,
+  maxNbroFractionDigits = TWO_NBRO_FRACTION_DIGITS,
+  throwOnTooLargeFractionPart = false
 ) {
-  if (string.length === 0) return null
-  const numberParts = string.split(decimalSeperator)
-  if (numberParts.length > 2) throw new TooManyDecimalSeperatorsException(`Found ${numberParts.length+1} decimal seperators (${decimalSeperator}). Only one is allowed.`)
-  const integerPartStr =  numberParts[0].replace(decimalSeperatorRegex, '')
-  if (containsNonNumerics(integerPartStr)) throw new TooManyDecimalSeperatorsException(`Integer part contains an invalid character`)
-  const integerPart = new BN(integerPartStr, 10).mul(amountToFractionlessFactorBn)
+  const fractionFactor = toFractionFactor(maxNbroFractionDigits)
+
+  if (numberString.length === 0) return null
+  const numberParts = numberString.split(decimalSeperator)
+  if (numberParts.length > 2) {
+    throw new TooManyDecimalSeperatorsException(
+      `Found ${numberParts.length+1} decimal seperators `
+      + `(${decimalSeperator}). Only one is allowed.`
+    )
+  }
+  const [integerPartStr, fractionPartStr] = numberParts
+
+  const integerPartWoDecimalSeperators = integerPartStr
+    .replace(decimalSeperatorRegex, '')
+  if (containsNonNumerics(integerPartWoDecimalSeperators)) {
+    throw new InvalidCharacterException(
+      'Integer part contains an invalid character'
+    )
+  }
+  const integerPart = new BN(integerPartWoDecimalSeperators, 10)
+    .mul(fractionFactor)
   
   if (numberParts.length === 1) return integerPart
 
-  const fractionalPartStr = numberParts[1].replace(decimalSeperatorRegex, '')
-  if (containsNonNumerics(fractionalPartStr)) throw new TooManyDecimalSeperatorsException(`Fractional part contains an invalid character`)
-  const fractionalPart = new BN(fractionalPartStr, 10)
-  return integerPart.add(fractionalPart)
+  if (containsNonNumerics(fractionPartStr)) {
+    throw new InvalidCharacterException(
+      'Fraction part contains an invalid character'
+    )
+  }
+  if (throwOnTooLargeFractionPart && fractionPartStr.length > maxNbroFractionDigits) {
+    throw new FrationalPartTooLargeException(
+      `Fractional part (${fractionPartStr}) of ${numberString} has more `
+      + `digits than allowed (${maxNbroFractionDigits})`
+    )
+  }
+  const fractionPart = new BN(fractionPartStr.slice(0, maxNbroFractionDigits), 10)
+
+  return integerPart.add(fractionPart)
 }

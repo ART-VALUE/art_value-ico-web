@@ -4,11 +4,11 @@ import Wallet from "../../../service/eth/Wallet";
 import { UserDto } from "../../../service/model/User";
 import Carousel from "../Carousel";
 import LogInUsingSessionSlide from "./LogInUsingSessionSlide";
-import SelectWalletSlide from "../wallet/SelectWalletSlide";
+import SelectWallet from "../wallet/SelectWalletSlide";
 import LogInUsingWalletSlide from "./LogInUsingWalletSlide";
 import SignUpSlide from "./SignUpSlide";
 import { ErrorP } from "../../style/error";
-import { P } from "../../style/text";
+import { H2, P } from "../../style/text";
 
 const LoginSlides: FunctionComponent<{
   onLoggedIn: (user: UserDto) => void
@@ -34,14 +34,15 @@ const LoginSlides: FunctionComponent<{
       key={LogInUsingSessionSlide.name}
       onLoggedIn={() => {}}
       onNotLoggedIn={() => setCarouselIndex(old => Math.max(old, 1)) } />,
-    <SelectWalletSlide
-      key={SelectWalletSlide.name}
-      onWalletSelected={wallet => {
-        setChosenWallet(wallet)
-        setCarouselIndex(old => Math.max(old, 2))
-      }}>
-      Select an Ethereum wallet to log in
-    </SelectWalletSlide>,
+    <div key="select-wallet">
+      <H2>Select an Ethereum wallet to log in</H2>
+      <P>All tokens will be sent to this wallet.</P>
+      <SelectWallet
+        onWalletSelected={wallet => {
+          setChosenWallet(wallet)
+          setCarouselIndex(old => Math.max(old, 2))
+        }} />
+    </div>,
     ...(chosenWallet != null
       ? [
         <LogInUsingWalletSlide
@@ -52,10 +53,7 @@ const LoginSlides: FunctionComponent<{
         <SignUpSlide
           key={SignUpSlide.name}
           wallet={chosenWallet}
-          onSignedUp={user => {
-            console.info('Calling LoginSlides.onLoggedIn because signup done', user)
-            onLoggedIn(user)
-          }} />
+          onSignedUp={user => onLoggedIn(user)} />
       ]
       : [<ErrorP key={"no-wallet-chosen"}>No wallet chosen</ErrorP>]
     )

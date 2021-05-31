@@ -34,7 +34,7 @@ export function isErrorProcessed(error: any) {
 export function errorToString(error: any) {
   if (error instanceof Error) {
     if (error instanceof NamedApiException) {
-      return `${error.originalName}: ${error.message}`
+      return error.message
     }
     return `${error.name}: ${error.message}`
   }

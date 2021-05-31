@@ -38,13 +38,9 @@ const DepositsTable: FunctionComponent<{}> = () => {
   const { deposit: depositIo } = useIos()
   const [currentDepositDetails, setCurrentDepositDetails] = useState<Deposit | null>(null)
   const [showVerifyDepositModal, setShowVerifyDepositModal] = useState(false)
-  const { currentUser, launchLoginModal } = useCurrentUserDetails()
   const qDeposits = useQuery(
     ['deposits', getMyPaidDeposits.name],
-    () => getMyPaidDeposits(depositIo),
-    {
-      enabled: currentUser != null
-    }
+    () => getMyPaidDeposits(depositIo)
   )
   const theme = useTheme()
 
@@ -60,7 +56,7 @@ const DepositsTable: FunctionComponent<{}> = () => {
       <GenericError error={qDeposits.error}>
         An error occured while trying to fetch your deposits
       </GenericError>
-      <button onClick={() => qDeposits.refetch()}>Try again</button>
+      <Button onClick={() => qDeposits.refetch()}>Try again</Button>
     </>
   }
 
@@ -72,92 +68,85 @@ const DepositsTable: FunctionComponent<{}> = () => {
     setCurrentDepositDetails(null)
   }
 
-  if (qDeposits.isSuccess) {
-    return (<>
-      <P>
-        To verify an unverified transaction (<FontAwesomeIcon icon={faTimes} color={theme.color.error} />),
-        click on the <FontAwesomeIcon icon={faInfoCircle} color="#fff" /> icon.
-      </P>
-      {qDeposits.data!!.length > 0
-        ? <Table>
-          <thead>
-            <TrHead>
-              <Th>Amount</Th>
-              <Th>Creation time</Th>
-              <Th>Deposit price Ether</Th>
-              <Th>Gas price Gwei</Th>
-              <Th>Transaction hash</Th>
-              <Th>Verified</Th>
-              <Th>Details</Th>
-            </TrHead>
-          </thead>
-          <tbody>
-            {qDeposits.data!!.map(deposit => (<Tr key={deposit.uuid}>
-              <TdAlignRight>{fractionlessToString(deposit.amount)}</TdAlignRight>
-              <Td>{(new Date(deposit.timeCreated*1000)).toLocaleString()}</Td>
-              <TdAlignRight>{weiToEtherStr(deposit.priceEther)}</TdAlignRight>
-              <TdAlignRight>{weiToGweiStr(deposit.gasPrice)}</TdAlignRight>
-              {deposit.ethTxHash == null
-                ? <TdItalic>Not yet created</TdItalic>
-                : <Td><A
-                    href={txHashToExplorerUrl(CHAIN_ID, deposit.ethTxHash)}
-                    target="_blank" rel="noreferrer">
-                      {deposit.ethTxHash.slice(0, 15)}...
-                  </A></Td>
-              }
-              <Td>{deposit.isVerified
-                ? <FontAwesomeIcon icon={faCheck} color={theme.color.success} />
-                : <FontAwesomeIcon icon={faTimes} color={theme.color.error} />
-              }</Td>
-              <Td>
-                <DepositDetailsButton
-                  onClick={() => setCurrentDepositDetails(deposit)}>
-                  <FontAwesomeIcon icon={faInfoCircle} color="#fff" />
-                </DepositDetailsButton>
-              </Td>
-            </Tr>))}
-          </tbody>
-        </Table>
-        : <P>You haven't made any presale deposits yet</P>
-      }
-
-      <Modal
-        style={modalStyle(theme)}
-        isOpen={(currentDepositDetails != null && !showVerifyDepositModal)}
-        contentLabel="Deposit Details Dialog"
-        onRequestClose={closeDepositDetailsModal}>
-          {currentDepositDetails != null
-            ? <DepositDetails
-                deposit={currentDepositDetails}
-                onLaunchVerification={() => handleLaunchVerification()} />
-            : <ErrorP>No deposit selected</ErrorP>
-          }
-        <Button onClick={closeDepositDetailsModal}>close</Button>
-      </Modal>
-      <Modal
-        style={modalStyle(theme)}
-        isOpen={currentDepositDetails != null && showVerifyDepositModal}
-        contentLabel="Deposit Details Dialog"
-        onRequestClose={closeDepositDetailsModal}>
-          {currentDepositDetails != null
-            ? <ConfirmAndVerifyDepositSlides
-              chainId={CHAIN_ID}
-              deposit={currentDepositDetails}
-              onVerified={verifiedDeposit => {
-                qDeposits.refetch()
-                setCurrentDepositDetails(verifiedDeposit)
-                setShowVerifyDepositModal(false)
-              }} />
-            : <ErrorP>No deposit selected</ErrorP>
-          }
-        <Button onClick={closeDepositDetailsModal}>close</Button>
-      </Modal>
-    </>)
-  }
-
   return <>
-    <P>You need to be logged in to view your deposits.</P>
-    <Button onClick={() => launchLoginModal()}>Log in</Button>
+    <P>
+      To verify an unverified transaction (<FontAwesomeIcon icon={faTimes} color={theme.color.error} />),
+      click on the <FontAwesomeIcon icon={faInfoCircle} color="#fff" /> icon.
+    </P>
+    {qDeposits.data!!.length > 0
+      ? <Table>
+        <thead>
+          <TrHead>
+            <Th>Amount</Th>
+            <Th>Creation time</Th>
+            <Th>Deposit price Ether</Th>
+            <Th>Gas price Gwei</Th>
+            <Th>Transaction hash</Th>
+            <Th>Verified</Th>
+            <Th>Details</Th>
+          </TrHead>
+        </thead>
+        <tbody>
+          {qDeposits.data!!.map(deposit => (<Tr key={deposit.uuid}>
+            <TdAlignRight>{fractionlessToString(deposit.amount)}</TdAlignRight>
+            <Td>{(new Date(deposit.timeCreated*1000)).toLocaleString()}</Td>
+            <TdAlignRight>{weiToEtherStr(deposit.priceEther)}</TdAlignRight>
+            <TdAlignRight>{weiToGweiStr(deposit.gasPrice)}</TdAlignRight>
+            {deposit.ethTxHash == null
+              ? <TdItalic>Not yet created</TdItalic>
+              : <Td><A
+                  href={txHashToExplorerUrl(CHAIN_ID, deposit.ethTxHash)}
+                  target="_blank" rel="noreferrer">
+                    {deposit.ethTxHash.slice(0, 15)}...
+                </A></Td>
+            }
+            <Td>{deposit.isVerified
+              ? <FontAwesomeIcon icon={faCheck} color={theme.color.success} />
+              : <FontAwesomeIcon icon={faTimes} color={theme.color.error} />
+            }</Td>
+            <Td>
+              <DepositDetailsButton
+                onClick={() => setCurrentDepositDetails(deposit)}>
+                <FontAwesomeIcon icon={faInfoCircle} color="#fff" />
+              </DepositDetailsButton>
+            </Td>
+          </Tr>))}
+        </tbody>
+      </Table>
+      : <P>You haven't made any presale deposits yet</P>
+    }
+
+    <Modal
+      style={modalStyle(theme)}
+      isOpen={(currentDepositDetails != null && !showVerifyDepositModal)}
+      contentLabel="Deposit Details Dialog"
+      onRequestClose={closeDepositDetailsModal}>
+        {currentDepositDetails != null
+          ? <DepositDetails
+              deposit={currentDepositDetails}
+              onLaunchVerification={() => handleLaunchVerification()} />
+          : <ErrorP>No deposit selected</ErrorP>
+        }
+      <Button onClick={closeDepositDetailsModal}>close</Button>
+    </Modal>
+    <Modal
+      style={modalStyle(theme)}
+      isOpen={currentDepositDetails != null && showVerifyDepositModal}
+      contentLabel="Deposit Details Dialog"
+      onRequestClose={closeDepositDetailsModal}>
+        {currentDepositDetails != null
+          ? <ConfirmAndVerifyDepositSlides
+            chainId={CHAIN_ID}
+            deposit={currentDepositDetails}
+            onVerified={verifiedDeposit => {
+              qDeposits.refetch()
+              setCurrentDepositDetails(verifiedDeposit)
+              setShowVerifyDepositModal(false)
+            }} />
+          : <ErrorP>No deposit selected</ErrorP>
+        }
+      <Button onClick={closeDepositDetailsModal}>close</Button>
+    </Modal>
   </>
 }
 

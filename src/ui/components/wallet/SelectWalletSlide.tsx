@@ -6,7 +6,7 @@ import { useWallets } from "../../../contexts";
 import { createProvider, BrowserWalletNotFoundException } from "../../../service/eth/providers";
 import { ProviderType } from "../../../service/eth/ProviderType";
 import Wallet from "../../../service/eth/Wallet";
-import { Button } from "../../style/button";
+import { Button, ImageButton } from "../../style/button";
 import { ErrorP } from "../../style/error";
 import { A, H2, H3, P } from "../../style/text";
 import Loading from "../Loading";
@@ -14,33 +14,9 @@ import LoadingRing from "../LoadingRing";
 import SelectExistingWalletForm from "./SelectExistingWalletForm";
 import SelectNewWalletAddressForm from "./SelectNewWalletAddressForm";
 
-const WalletButton = styled.button`
-  width: 5rem;
-  padding: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  width: 5rem;
-  height: 3rem;
-  padding: 0.5em;
-  margin-right: 0.5rem;
-
-  > img {
-    max-width: 100%;
-    max-height: 100%;
-    /* fill: ; */
-    padding: 0;
-    margin: 0;
-  }
-`
-
-const SelectWalletSlide: FunctionComponent<{
+const SelectWallet: FunctionComponent<{
   onWalletSelected: (wallet: Wallet) => void
-}> = ({ onWalletSelected, children }) => {
-  if (children == null) throw new Error("SelectWalletSlide must have children")
-  
+}> = ({ onWalletSelected }) => {  
   const { wallets: walletsSet, setWallets } = useWallets()
   const wallets = Array.from(walletsSet.values())
   const [newWalletProviderType, setNewWalletProviderType] = useState<ProviderType | null>(null)
@@ -61,26 +37,23 @@ const SelectWalletSlide: FunctionComponent<{
   const handleSelectDifferent = () => setNewWalletProviderType(null)
 
   return (<>
-    <H2>{children}</H2>
+    <H3>Choose an existing wallet</H3>
     {wallets.length > 0
-      ? <>
-        <H3>Choose an existing wallet</H3>
-        <SelectExistingWalletForm onWalletSelected={onWalletSelected} />
-      </>
+      ? <SelectExistingWalletForm onWalletSelected={onWalletSelected} />
       : <P>You don't have any existing wallets</P>
     }
     <H3>Connect a new wallet</H3>
     {newWalletProviderType == null
       ? <form onSubmit={e => e.preventDefault()}>
-        <WalletButton type="submit" value="portis" onClick={handlePortisClick}>
+        <ImageButton type="submit" value="portis" onClick={handlePortisClick}>
           <img src={process.env.PUBLIC_URL + '/icon/portis.png'} alt="Portis" />
-        </WalletButton>
-        <WalletButton type="submit" value="crypto" onClick={handleBrowserWalletClick}>
+        </ImageButton>
+        <ImageButton type="submit" value="crypto" onClick={handleBrowserWalletClick}>
           <img src={process.env.PUBLIC_URL + '/icon/metamask.svg'} alt="Metamask" />
-        </WalletButton>
-        <WalletButton type="submit" value="crypto" onClick={handleBrowserWalletClick}>
+        </ImageButton>
+        <ImageButton type="submit" value="crypto" onClick={handleBrowserWalletClick}>
         <img src={process.env.PUBLIC_URL + '/icon/globe.svg'} alt="Other browser wallet" />
-        </WalletButton>
+        </ImageButton>
       </form>
       : <>
         {qNewWalletProvider.isLoading
@@ -129,4 +102,4 @@ const SelectWalletSlide: FunctionComponent<{
   </>)
 }
 
-export default SelectWalletSlide
+export default SelectWallet

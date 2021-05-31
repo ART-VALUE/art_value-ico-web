@@ -7,7 +7,7 @@ import PurchaseSlides from './purchase/PurchaseSlides';
 import styled, { useTheme } from 'styled-components';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './purchase/ErrorFallback';
-import { Button, ButtonBig } from '../style/button';
+import { Button, ButtonBig, ModalCloseButton } from '../style/button';
 import { modalStyle } from '../style/modal';
 import { TextClock } from './TextCountdown';
 import { A, H1, H2, P, StrongNumber } from '../style/text';
@@ -28,22 +28,11 @@ const TextClockContainer = styled.div`
   margin-bottom: 5rem;
 `
 
-const ModalCloseButton = styled.button`
-  position: absolute;
-  right: 0;
-  top: 0;
-  background: none;
-  border: none;
-  padding: 1rem;
-  color: #fff;
-  cursor: pointer;
-`
-
 const Home: FunctionComponent<{
   stripePromise: Promise<Stripe>
 }> = ({ stripePromise }) => {
   const [purchaseDialogOpen, setPurchaseDialogOpen] = useState(false)
-  const endDate = 1622465999000 // 31/05/21 23:59:59 https://www.epochconverter.com/
+  const endDate = 1623103199000 // 7/6/21 23:59:59 CEST https://www.epochconverter.com/
   const currentUserDetails = useCurrentUserDetails()
   const theme = useTheme()
 
@@ -75,7 +64,7 @@ const Home: FunctionComponent<{
       </P>
       <TextClockContainer>
         <TextClock date={endDate} />
-        <P>...days until the presale ends.</P>
+        <P>...until the presale ends.</P>
       </TextClockContainer>
       <ButtonBig onClick={handlePurchaseTokenClick}>Invest now</ButtonBig>
       <Modal

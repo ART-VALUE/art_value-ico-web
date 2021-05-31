@@ -15,6 +15,9 @@ import { sessionHeartbeat } from '../../service/api/session';
 import '../style/page.scss';
 import { modalStyle } from '../style/modal';
 import { isDev } from '../../env';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ModalCloseButton } from '../style/button';
 
 const apiBase = isDev ? 'http://localhost:3000' : 'https://art-value-ico-api.herokuapp.com'
 console.info(`Art Value ICO - ${isDev ? 'dev' : 'prod'} - API base: ${apiBase}`)
@@ -64,7 +67,7 @@ const App: FunctionComponent<{}> = () => {
       setCurrentUser(currentUser)
     },
     nullCurrentUser: () => setCurrentUser(null),
-    launchLoginModal: () => {
+    loginByModal: () => {
       setLoginDialogOpen(true)
     }
   }
@@ -72,6 +75,10 @@ const App: FunctionComponent<{}> = () => {
   const web3WrapperContextData: WalletsProviderData = {
     wallets,
     setWallets
+  }
+
+  const closeLoginModal = () => {
+    setLoginDialogOpen(false)
   }
 
   return (
@@ -88,7 +95,10 @@ const App: FunctionComponent<{}> = () => {
                 style={modalStyle(theme)}
                 isOpen={loginDialogOpen}
                 contentLabel="Login Dialog"
-                shouldCloseOnOverlayClick={true}>
+                onRequestClose={() => closeLoginModal()}>
+                <ModalCloseButton onClick={() => closeLoginModal()}>
+                  <FontAwesomeIcon icon={faTimes} size="2x" />
+                </ModalCloseButton>
                 <LoginSlides onLoggedIn={() => {
                   setLoginDialogOpen(false)
                 }} />
