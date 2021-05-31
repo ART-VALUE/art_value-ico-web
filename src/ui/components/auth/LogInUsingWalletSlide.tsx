@@ -47,8 +47,8 @@ const LogInUsingWalletSlide: FunctionComponent<{
   return <>
     <H2>Sign the authentication code to log in</H2>
     <P>
-      By signing the authentication code we can make sure that you control 
-      this crypto wallet. This way we know any tokens you might purchase will 
+      By signing the authentication code make sure you control 
+      this crypto wallet. This way we know any tokens you purchase will 
       be sent to the right wallet.
     </P>
     {(() => {

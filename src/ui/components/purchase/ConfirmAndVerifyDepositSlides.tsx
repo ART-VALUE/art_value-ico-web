@@ -24,16 +24,19 @@ const ConfirmAndVerifyDepositSlides: FunctionComponent<{
   const [verifiedDeposit, setVerifiedDeposit] = useState<Deposit | null>(null)
 
   return <Carousel currentIndex={carouselIndex}>{[
-    <>
+    <div key="select-wallet">
       <H2>Select wallet to confirm transaction</H2>
-      <P>It doesn't matter which wallet you choose.</P>
+      <P>
+        It doesn't matter which wallet you choose, 
+        you can use the same one you used to log in.
+      </P>
       <SelectWallet
         key={SelectWallet.name}
         onWalletSelected={wallet => {
           setSelectedWallet(wallet)
           setCarouselIndex(old => Math.max(old, 1))
         }} />
-    </>,
+    </div>,
     ...(selectedWallet != null
       ? [
         <GetEthTxReceipt

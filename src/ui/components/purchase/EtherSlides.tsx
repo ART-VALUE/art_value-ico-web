@@ -19,7 +19,7 @@ const EtherSlides: FunctionComponent<{
   const [chosenWallet, setChosenWallet] = useState<Wallet | null>(null)
   
   return <Carousel currentIndex={carouselIndex}>{[
-    <>
+    <div key="select-wallet">
       <H2>Select an Ethereum wallet to pay</H2>
       <P>This doesn't need to be the same wallet you used to log in.</P>
       <SelectWallet
@@ -28,7 +28,7 @@ const EtherSlides: FunctionComponent<{
           setChosenWallet(wallet)
           setCarouselIndex(old => Math.max(old, 1))
         }} />
-    </>,
+    </div>,
     ...(chosenWallet !== null ? [
       <PayUsingWalletSlide
         key={PayUsingWalletSlide.name}
