@@ -1,11 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="479.99" height="300" enable-background="new 0 0 1920 1920" version="1.1" viewBox="0 0 479.99 300" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><metadata><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/><dc:title/></cc:Work></rdf:RDF></metadata><script/>
-<path d="m479.98 283.95c0 8.8348-7.2149 16.051-16.051 16.051h-447.88c-8.8359 0-16.051-7.2159-16.051-16.051v-267.89c0-8.8358 7.2148-16.052 16.051-16.052h447.89c8.8358 0 16.051 7.2159 16.051 16.052v267.89z" fill="#d3daf9" stroke-width=".99998"/><g transform="matrix(.11269 0 0 .11269 131.82 41.819)">
-	<polygon points="420.1 976.3 959.8 731 959.8 80.7" fill="#8a92b2"/>
-	<polygon points="420.1 976.3 959.8 1295.4 959.8 731" fill="#62688f"/>
-	<polygon points="959.8 80.7 959.8 731 1499.6 976.3" fill="#62688f"/>
-	<polygon points="1499.6 976.3 959.8 731 959.8 1295.4" fill="#454a75"/>
-	<polygon points="959.8 1839.3 959.8 1397.6 420.1 1078.7" fill="#8a92b2"/>
-	<polygon points="959.8 1839.3 1499.9 1078.7 959.8 1397.6" fill="#62688f"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="121.68266"
+   height="198.17664"
+   enable-background="new 0 0 1920 1920"
+   version="1.1"
+   viewBox="0 0 121.68267 198.17664"
+   xml:space="preserve"
+   id="svg22"
+   sodipodi:docname="ethereum.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15, custom)"><defs
+   id="defs26" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1879"
+   inkscape:window-height="1051"
+   id="namedview24"
+   showgrid="false"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0"
+   inkscape:zoom="2.3833333"
+   inkscape:cx="60.833926"
+   inkscape:cy="99.086917"
+   inkscape:window-x="41"
+   inkscape:window-y="0"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg22" /><metadata
+   id="metadata2"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><script
+   id="script4" />
+<g
+   transform="matrix(0.11269,0,0,0.11269,-47.341069,-9.094083)"
+   id="g20">
+	<polygon
+   points="959.8,80.7 420.1,976.3 959.8,731 "
+   fill="#8a92b2"
+   id="polygon8" />
+	<polygon
+   points="959.8,731 420.1,976.3 959.8,1295.4 "
+   fill="#62688f"
+   id="polygon10" />
+	<polygon
+   points="1499.6,976.3 959.8,80.7 959.8,731 "
+   fill="#62688f"
+   id="polygon12" />
+	<polygon
+   points="959.8,1295.4 1499.6,976.3 959.8,731 "
+   fill="#454a75"
+   id="polygon14" />
+	<polygon
+   points="420.1,1078.7 959.8,1839.3 959.8,1397.6 "
+   fill="#8a92b2"
+   id="polygon16" />
+	<polygon
+   points="959.8,1397.6 959.8,1839.3 1499.9,1078.7 "
+   fill="#62688f"
+   id="polygon18" />
 </g>
 </svg>

@@ -69,50 +69,52 @@ const DepositsTable: FunctionComponent<{}> = () => {
   }
 
   return <>
-    <P>
-      To verify an unverified transaction (<FontAwesomeIcon icon={faTimes} color={theme.color.error} />),
-      click on the <FontAwesomeIcon icon={faInfoCircle} color="#fff" /> icon.
-    </P>
     {qDeposits.data!!.length > 0
-      ? <Table>
-        <thead>
-          <TrHead>
-            <Th>Amount</Th>
-            <Th>Creation time</Th>
-            <Th>Deposit price Ether</Th>
-            <Th>Gas price Gwei</Th>
-            <Th>Transaction hash</Th>
-            <Th>Verified</Th>
-            <Th>Details</Th>
-          </TrHead>
-        </thead>
-        <tbody>
-          {qDeposits.data!!.map(deposit => (<Tr key={deposit.uuid}>
-            <TdAlignRight>{fractionlessToString(deposit.amount)}</TdAlignRight>
-            <Td>{(new Date(deposit.timeCreated*1000)).toLocaleString()}</Td>
-            <TdAlignRight>{weiToEtherStr(deposit.priceEther)}</TdAlignRight>
-            <TdAlignRight>{weiToGweiStr(deposit.gasPrice)}</TdAlignRight>
-            {deposit.ethTxHash == null
-              ? <TdItalic>Not yet created</TdItalic>
-              : <Td><A
-                  href={txHashToExplorerUrl(CHAIN_ID, deposit.ethTxHash)}
-                  target="_blank" rel="noreferrer">
-                    {deposit.ethTxHash.slice(0, 15)}...
-                </A></Td>
-            }
-            <Td>{deposit.isVerified
-              ? <FontAwesomeIcon icon={faCheck} color={theme.color.success} />
-              : <FontAwesomeIcon icon={faTimes} color={theme.color.error} />
-            }</Td>
-            <Td>
-              <DepositDetailsButton
-                onClick={() => setCurrentDepositDetails(deposit)}>
-                <FontAwesomeIcon icon={faInfoCircle} color="#fff" />
-              </DepositDetailsButton>
-            </Td>
-          </Tr>))}
-        </tbody>
-      </Table>
+      ? <>
+        <P>
+          To verify an unverified transaction (<FontAwesomeIcon icon={faTimes} color={theme.color.error} />),
+          click on the <FontAwesomeIcon icon={faInfoCircle} color="#fff" /> icon.
+        </P>
+        <Table>
+          <thead>
+            <TrHead>
+              <Th>Amount</Th>
+              <Th>Creation time</Th>
+              <Th>Deposit price Ether</Th>
+              <Th>Gas price Gwei</Th>
+              <Th>Transaction hash</Th>
+              <Th>Verified</Th>
+              <Th>Details</Th>
+            </TrHead>
+          </thead>
+          <tbody>
+            {qDeposits.data!!.map(deposit => (<Tr key={deposit.uuid}>
+              <TdAlignRight>{fractionlessToString(deposit.amount)}</TdAlignRight>
+              <Td>{(new Date(deposit.timeCreated*1000)).toLocaleString()}</Td>
+              <TdAlignRight>{weiToEtherStr(deposit.priceEther)}</TdAlignRight>
+              <TdAlignRight>{weiToGweiStr(deposit.gasPrice)}</TdAlignRight>
+              {deposit.ethTxHash == null
+                ? <TdItalic>Not yet created</TdItalic>
+                : <Td><A
+                    href={txHashToExplorerUrl(CHAIN_ID, deposit.ethTxHash)}
+                    target="_blank" rel="noreferrer">
+                      {deposit.ethTxHash.slice(0, 15)}...
+                  </A></Td>
+              }
+              <Td>{deposit.isVerified
+                ? <FontAwesomeIcon icon={faCheck} color={theme.color.success} />
+                : <FontAwesomeIcon icon={faTimes} color={theme.color.error} />
+              }</Td>
+              <Td>
+                <DepositDetailsButton
+                  onClick={() => setCurrentDepositDetails(deposit)}>
+                  <FontAwesomeIcon icon={faInfoCircle} color="#fff" />
+                </DepositDetailsButton>
+              </Td>
+            </Tr>))}
+          </tbody>
+        </Table>
+      </>
       : <P>You haven't made any presale deposits yet</P>
     }
 
