@@ -2,6 +2,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import { provider as Provider } from "web3-core";
 import { ProviderType } from "./ProviderType";
 import Portis from "@portis/web3"
+import { ChainId, web3networks } from './networks';
 
 export class BrowserWalletNotFoundException extends Error {
   constructor(message?: string) {
@@ -10,16 +11,16 @@ export class BrowserWalletNotFoundException extends Error {
   }
 }
 
-export async function createProvider(providerType: ProviderType) {
-  if (providerType === 'portis') return createPortisProvider()
+export async function createProvider(providerType: ProviderType, chainId: ChainId) {
+  if (providerType === 'portis') return createPortisProvider(chainId)
   else if (providerType === 'browser') return await createBrowserProvider()
   else throw Error('Unknown ProviderType')
 }
 
-export function createPortisProvider() {
+export function createPortisProvider(chainId: ChainId) {
   return new Portis(
     `79582b9a-9e5b-4ae6-b7ec-643a28136c09`,
-    `rinkeby`, { scope: ['email'] }
+    web3networks[chainId].portisName, { scope: ['email'] }
   ).provider as Provider
 }
 
