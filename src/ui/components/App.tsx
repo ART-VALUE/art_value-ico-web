@@ -13,11 +13,13 @@ import Modal from 'react-modal';
 import LoginSlides from './auth/LoginSlides';
 import { sessionHeartbeat } from '../../service/api/session';
 import '../style/page.scss';
-import { modalStyle } from '../style/modal';
+import { ModalCloseButton, ModalContainer, modalStyle } from '../style/modal';
 import { isDev } from '../../env';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalCloseButton } from '../style/button';
+import AvModal from './AvModal';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallback from './purchase/ErrorFallback';
 
 const apiBase = isDev ? 'http://localhost:3000' : 'https://art-value-ico-api.herokuapp.com'
 console.info(`Art Value ICO - ${isDev ? 'dev' : 'prod'} - API base: ${apiBase}`)
@@ -87,22 +89,20 @@ const App: FunctionComponent<{}> = () => {
         <WalletsContext.Provider value={web3WrapperContextData}>
           <CurrentUserContext.Provider value={currentUserContextData}>
             <PageWrapperDiv>
+              
               <Routes>
                 <Navigation />
               </Routes>
 
-              <Modal
-                style={modalStyle(theme)}
+              <AvModal
                 isOpen={loginDialogOpen}
-                contentLabel="Login Dialog"
-                onRequestClose={() => closeLoginModal()}>
-                <ModalCloseButton onClick={() => closeLoginModal()}>
-                  <FontAwesomeIcon icon={faTimes} size="2x" />
-                </ModalCloseButton>
-                <LoginSlides onLoggedIn={() => {
-                  setLoginDialogOpen(false)
-                }} />
-              </Modal>
+                onClose={closeLoginModal}
+                contentLabel="Login Dialog">
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <LoginSlides onLoggedIn={closeLoginModal} />
+                </ErrorBoundary>
+              </AvModal>
+
             </PageWrapperDiv>
           </CurrentUserContext.Provider>
         </WalletsContext.Provider>

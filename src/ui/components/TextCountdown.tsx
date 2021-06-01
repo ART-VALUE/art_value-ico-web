@@ -60,7 +60,7 @@ const NumberPartLabel = styled.span`
   text-align: left;
 `
 
-const NumberPartSeperator = styled.span`
+const NumberPartSeparator = styled.span`
   font-size: 80pt;
 `
 
@@ -98,21 +98,21 @@ export const TextClock: FunctionComponent<FlipClockProps> = ({date}) => {
       </NumberPart>
       <NumberPartLabel>days</NumberPartLabel>
     </NumberPartContainer>
-    <NumberPartSeperator>:</NumberPartSeperator>
+    <NumberPartSeparator>:</NumberPartSeparator>
     <NumberPartContainer>
       <NumberPart>
         {tMinusParts.new.hoursOfDay.toString().padStart(2, '0')}
       </NumberPart>
       <NumberPartLabel>hours</NumberPartLabel>
     </NumberPartContainer>
-    <NumberPartSeperator>:</NumberPartSeperator>
+    <NumberPartSeparator>:</NumberPartSeparator>
     <NumberPartContainer>
       <NumberPart>
         {tMinusParts.new.minutesOfHour.toString().padStart(2, '0')}
       </NumberPart>
       <NumberPartLabel>minutes</NumberPartLabel>
     </NumberPartContainer>
-    <NumberPartSeperator>:</NumberPartSeperator>
+    <NumberPartSeparator>:</NumberPartSeparator>
     <NumberPartContainer>
       <NumberPart>
         {tMinusParts.new.secondsOfMinute.toString().padStart(2, '0')}

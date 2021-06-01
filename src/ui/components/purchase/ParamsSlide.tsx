@@ -18,25 +18,36 @@ const ParamsSlide: FunctionComponent<{
   const form = useRef<HTMLFormElement>(null)
   const [amountError, setAmountError] = useState<string | null>(null)
   const [amount, setAmount] = useState<null | BN>(null)
+  const [amountText, setAmountText] = useState('')
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newAmountString = e.target.value
-    let newAmount
+    let parseResult
     try {
-      newAmount = fractionlessNumberFromString(newAmountString)
+      parseResult = fractionlessNumberFromString(newAmountString)
     } catch (error) {
       if (error instanceof NumberFormatException) {
         setAmountError(error.message)
+        setAmountText(newAmountString)
         return
       } else throw error
     }
-    setAmountError(null)
+    if (parseResult === null) {
+      setAmountError(null)
+      setAmountText('')
+      setAmount(null)
+      return
+    }
+    const { number: newAmount, withDecimalSeparator } = parseResult
     if (newAmount == null) return
     if (newAmount.lt(MINIMUM_ARTS_AMOUNT)) {
       setAmountError('Amount is too small')
+      setAmountText(withDecimalSeparator)
       return
     }
+    setAmountError(null)
     setAmount(newAmount)
+    setAmountText(withDecimalSeparator)
   }
 
   const handleEthereumCheckout = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,6 +62,7 @@ const ParamsSlide: FunctionComponent<{
   const minimumAmountStr = fractionlessToString(MINIMUM_ARTS_AMOUNT)
   const amountChargedNow = amount == null ? null : amount.mul(DEPOSIT_PERCENTAGE).div(CENT)
   const amountChargedDuringPrivate = amountChargedNow == null || amount == null ? null : amount.sub(amountChargedNow)
+  console.info(`Amount charged now: ${amountChargedNow}, during private: ${amountChargedDuringPrivate}`)
 
   return (<>
     <H2>Select investment amount</H2>
@@ -65,9 +77,9 @@ const ParamsSlide: FunctionComponent<{
       <Label>
         Private ICO investment (EUR, {minimumAmountStr} minimum)
         <Input
-          type="number" step="0.01" placeholder={minimumAmountStr} min={minimumAmountStr}
+          type="text" placeholder={minimumAmountStr}
           onChange={handleAmountChange}
-        />
+          value={amountText} />
       </Label>
       {amountError != null ? <ErrorP>{amountError}</ErrorP> : <></>}
       <P>
@@ -90,7 +102,7 @@ const ParamsSlide: FunctionComponent<{
         {/* <img src={process.env.PUBLIC_URL + '/icon/bitcoin.svg'} alt="bitcoin"/> */}
       </ImageButton>
       <P><SpanItalic>During this stage of the ICO only payment via Ethereum is available.</SpanItalic></P>
-      <P><SpanItalic>Your browser uses '{browserDecimalSeparator}' as a decimal seperator. We will try to use that choice wherever possible.</SpanItalic></P>
+      <P><SpanItalic>Your browser uses '{browserDecimalSeparator}' as a decimal separator. We will try to use that choice wherever possible.</SpanItalic></P>
     </form>
   </>)
 }

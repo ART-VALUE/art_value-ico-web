@@ -7,13 +7,14 @@ import PurchaseSlides from './purchase/PurchaseSlides';
 import styled, { useTheme } from 'styled-components';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './purchase/ErrorFallback';
-import { Button, ButtonBig, ModalCloseButton } from '../style/button';
-import { modalStyle } from '../style/modal';
+import { ButtonBig } from '../style/button';
+import { ModalCloseButton, modalStyle } from '../style/modal';
 import { TextClock } from './TextCountdown';
 import { A, H1, H2, P, StrongNumber } from '../style/text';
 import { Main, MainWrapper } from '../style/grouping';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import AvModal from './AvModal';
 
 const HomeH1 = styled(H1)`
   margin-top: 5rem;
@@ -67,18 +68,14 @@ const Home: FunctionComponent<{
         <P>...until the presale ends.</P>
       </TextClockContainer>
       <ButtonBig onClick={handlePurchaseTokenClick}>Invest now</ButtonBig>
-      <Modal
-        style={modalStyle(theme)}
+      <AvModal
         isOpen={purchaseDialogOpen}
-        contentLabel="Coin Purchase Dialog"
-        onRequestClose={closeModal}>
-        <ModalCloseButton onClick={closeModal}>
-          <FontAwesomeIcon icon={faTimes} size="2x" />
-        </ModalCloseButton>
+        onClose={closeModal}
+        contentLabel="Coin Purchase Dialog">
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <PurchaseSlides stripePromise={stripePromise} onClose={() => closeModal()} />
         </ErrorBoundary>
-      </Modal>
+      </AvModal>
     </Main>
   </MainWrapper>)
 }

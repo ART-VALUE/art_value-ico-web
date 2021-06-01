@@ -5,10 +5,10 @@ export class NumberFormatException extends Error {
   }
 }
 
-export class TooManyDecimalSeperatorsException extends NumberFormatException {
+export class TooManyDecimalSeparatorsException extends NumberFormatException {
   constructor(message: string) {
     super(message)
-    this.name = 'TooManyDecimalSeperatorsException'
+    this.name = 'TooManyDecimalSeparatorsException'
   }
 }
 

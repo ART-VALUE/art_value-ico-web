@@ -18,17 +18,6 @@ export const ButtonBig = styled(Button)`
   font-size: 20pt;
 `
 
-export const ModalCloseButton = styled.button`
-  position: absolute;
-  right: 0;
-  top: 0;
-  background: none;
-  border: none;
-  padding: 1rem;
-  color: #fff;
-  cursor: pointer;
-`
-
 export const ImageButton = styled.button`
   width: 5rem;
   padding: 0;
