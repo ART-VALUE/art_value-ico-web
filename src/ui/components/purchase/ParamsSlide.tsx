@@ -10,7 +10,7 @@ import { ImageButton } from "../../style/button"
 
 const CENT = new BN('100')
 const DEPOSIT_PERCENTAGE = new BN('20')
-const MINIMUM_ARTS_AMOUNT = new BN('20000')
+const MINIMUM_ARTS_AMOUNT = new BN('200')
 
 const ParamsSlide: FunctionComponent<{
   onEtherCheckout: (amount: BN) => void
