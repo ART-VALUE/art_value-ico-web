@@ -25,7 +25,7 @@ jobs:
         CI: false
     - name: Add GH Pages files
       run: |
-        echo 'artvalueico.pfiers.net' | tee build/CNAME
+        echo 'ico.artvalue.org' | tee build/CNAME
         touch build/.nojekyll
     - name: Deploy
       uses: s0/git-publish-subdir-action@v2.4.0
