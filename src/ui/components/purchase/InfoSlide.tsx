@@ -22,8 +22,8 @@ const InfoSlide: FunctionComponent<{
         For example, by investing €200 in the private ICO, you will be charged 
         €40 now and you will need to pay the remaining €160 during the private 
         ICO (in a week or so). After paying this remaining amount you will 
-        receive the 400 ARTS (for this example) and your unique Art Value 
-        Number NFT (200 in this case).
+        receive 400 ARTS and the unique '200' Art Value 
+        Number NFT.
       </P>
     </Section>
     <Button onClick={() => onContinue()}>Continue</Button>

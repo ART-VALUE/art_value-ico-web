@@ -47,7 +47,10 @@ const CreateDepositSlide: FunctionComponent<{
             <P>
               Please contact us at{' '}
               <A href={`mailto:info@artvalue.org?subject=Purchase%20of%20${fractionlessToString(amount)}`}>info@artvalue.org</A>{' '}
-              if you are interested in buying it.
+              if you are interested in buying this exact number.
+            </P>
+            <P>
+              You can go back and select another number. For example {fractionlessToString(amount.add(new BN(10)))} or {fractionlessToString(amount.add(new BN(200)))}.
             </P>
           </>
         } else if (isNamedApiException(qDepositMutation.error, 'AlreadyReservedException')) {
@@ -57,6 +60,9 @@ const CreateDepositSlide: FunctionComponent<{
               Please contact us at{' '}
               <A href={`mailto:info@artvalue.org`}>info@artvalue.org</A>{' '}
               if you have any questions.
+            </P>
+            <P>
+              You can go back and select another number. For example {fractionlessToString(amount.add(new BN(10)))} or {fractionlessToString(amount.add(new BN(200)))}.
             </P>
           </>
         }

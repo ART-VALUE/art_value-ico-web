@@ -62,16 +62,19 @@ const ParamsSlide: FunctionComponent<{
   const minimumAmountStr = fractionlessToString(MINIMUM_ARTS_AMOUNT)
   const amountChargedNow = amount == null ? null : amount.mul(DEPOSIT_PERCENTAGE).div(CENT)
   const amountChargedDuringPrivate = amountChargedNow == null || amount == null ? null : amount.sub(amountChargedNow)
-  console.info(`Amount charged now: ${amountChargedNow}, during private: ${amountChargedDuringPrivate}`)
 
   return (<>
     <H2>Select investment amount</H2>
     <P>
-      After making the final payment during the private ICO, you will receive 
-      the number NFT equivalent to the total invested amount entered below 
-      (along with 2x ARTS). You can enter any whole number or two-decimal 
-      digit fractional number (482, 300.25, 420.5 ...). You will be charged{' '}
-      {DEPOSIT_PERCENTAGE.toString(10)}% of this amount now.
+      Please enter the exact whole number or two-decimal digit 
+      fractional number (482, 787.00, 300.25, 222.44, 420.5 ...)
+      you want to receive during the private ICO as a unique
+      Art Value NFT Number (along with 2X this amount in ARTS).
+      You will be charged {DEPOSIT_PERCENTAGE.toString(10)}% 
+      of this amount now as the presale deposit.
+      It is possible the number you enter is already reserved
+      by someone else. If so, you'll be given the option to choose
+      an alternative.
     </P>
     <form onSubmit={e => e.preventDefault()} ref={form}>
       <Label>
@@ -83,10 +86,10 @@ const ParamsSlide: FunctionComponent<{
       </Label>
       {amountError != null ? <ErrorP>{amountError}</ErrorP> : <></>}
       <P>
-        Amount charged now (EUR, excluding transaction fees):{' '}
+        Amount charged now:{' '}
         <MonoData>{amountChargedNow == null ? '?' : fractionlessToString(amountChargedNow)}</MonoData><br/>
         Amount charged during private ICO:{' '}
-        <MonoData>{amountChargedDuringPrivate == null ? '?' : fractionlessToString(amountChargedDuringPrivate)}</MonoData>
+        <MonoData>{amountChargedDuringPrivate == null ? '?' : fractionlessToString(amountChargedDuringPrivate)}</MonoData><br />
       </P>
       <P>Checkout with:</P>
       {/* <button className="payment-btn" type="submit" value="creditcard" onClick={onStipeBtnClick}>
@@ -102,7 +105,8 @@ const ParamsSlide: FunctionComponent<{
         {/* <img src={process.env.PUBLIC_URL + '/icon/bitcoin.svg'} alt="bitcoin"/> */}
       </ImageButton>
       <P><SpanItalic>During this stage of the ICO only payment via Ethereum is available.</SpanItalic></P>
-      <P><SpanItalic>Your browser uses '{browserDecimalSeparator}' as a decimal separator. We will try to use that choice wherever possible.</SpanItalic></P>
+      <P><SpanItalic>Your browser uses '{browserDecimalSeparator}' as a decimal separator. We therefore use it in the input field above and to display numbers.</SpanItalic></P>
+      <P><SpanItalic>All values above are given in Euro and exclude gas fees.</SpanItalic></P>
     </form>
   </>)
 }
