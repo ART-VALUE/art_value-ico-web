@@ -33,7 +33,17 @@ const Home: FunctionComponent<{
     setPurchaseDialogOpen(true)
   }
 
-  const closeModal = () => {
+  const closeModal = (success: boolean) => {
+    if (!success) {
+      const confirmation = window.confirm(
+        'Are you sure you want to cancel your deposit?'
+        + ' If your payment is currently being submitted to the network you might'
+        + ' lose your deposit. Please contact us at info@artvalue.org if you'
+        + ' experienced any problems or have any questions. \n'
+        + 'Click OK if you\'re sure you want to cancel your deposit.'
+      )
+      if (!confirmation) return
+    }
     setPurchaseDialogOpen(false)
   }
 
@@ -57,10 +67,10 @@ const Home: FunctionComponent<{
       <ButtonBig onClick={handlePurchaseTokenClick}>Invest now</ButtonBig>
       <AvModal
         isOpen={purchaseDialogOpen}
-        onClose={closeModal}
+        onClose={() => closeModal(false)}
         contentLabel="Coin Purchase Dialog">
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <PurchaseSlides stripePromise={stripePromise} onClose={() => closeModal()} />
+          <PurchaseSlides stripePromise={stripePromise} onClose={success => closeModal(success)} />
         </ErrorBoundary>
       </AvModal>
     </Main>

@@ -24,7 +24,7 @@ import config from "../../../config";
 
 const PurchaseSlides: FunctionComponent<{
   stripePromise: Promise<Stripe | null>,
-  onClose: () => void
+  onClose: (success: boolean) => void
 }> = ({ stripePromise, onClose }) => {
   const { currentUser } = useCurrentUserDetails()
   const [amount, setAmount] = useState<BN | null>(null)
@@ -131,7 +131,7 @@ const PurchaseSlides: FunctionComponent<{
                               <SuccessSlide
                                 key={SuccessSlide.name}
                                 deposit={deposit}
-                                onClose={onClose} />
+                                onClose={() => onClose(true)} />
                             ]
                             : []
                           )
