@@ -54,11 +54,12 @@ const Home: FunctionComponent<{
         The Art Value ICO presale is now open!
       </HomeH1>
       <P>
-        Invest now to secure the <StrongNumber>2X</StrongNumber> ARTS per Euro price during the private ICO.
+        Invest now to secure the <StrongNumber>2X</StrongNumber> ARTS per Euro price during the private ICO. 
       </P>
       <P>
-        By investing now you will also receive a unique Art Value Number equal to your invested amount.{' '}
-        <A href="https://artvalue.org/ico/">Learn more</A>
+        By investing now you will also receive a unique <StrongNumber>Art Value Number NFT</StrongNumber> 
+        equal to your invested amount. You could be the proud owner of the number
+        460! <A href="https://artvalue.org/ico/">Learn more</A>
       </P>
       <TextClockContainer>
         <TextClock date={endDate} />
