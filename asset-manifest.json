@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/static/css/main.f95f0ed1.chunk.css",
-    "main.js": "/static/js/main.3664b212.chunk.js",
-    "main.js.map": "/static/js/main.3664b212.chunk.js.map",
+    "main.js": "/static/js/main.14acd349.chunk.js",
+    "main.js.map": "/static/js/main.14acd349.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.c35c36f7.js",
     "runtime-main.js.map": "/static/js/runtime-main.c35c36f7.js.map",
-    "static/js/2.3cb8be3c.chunk.js": "/static/js/2.3cb8be3c.chunk.js",
-    "static/js/2.3cb8be3c.chunk.js.map": "/static/js/2.3cb8be3c.chunk.js.map",
+    "static/js/2.c1af989e.chunk.js": "/static/js/2.c1af989e.chunk.js",
+    "static/js/2.c1af989e.chunk.js.map": "/static/js/2.c1af989e.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.f95f0ed1.chunk.css.map": "/static/css/main.f95f0ed1.chunk.css.map",
-    "static/js/2.3cb8be3c.chunk.js.LICENSE.txt": "/static/js/2.3cb8be3c.chunk.js.LICENSE.txt",
+    "static/js/2.c1af989e.chunk.js.LICENSE.txt": "/static/js/2.c1af989e.chunk.js.LICENSE.txt",
     "static/media/page.scss": "/static/media/Avenir_95_Black.c4c0440c.woff",
     "static/media/logo-transparent.8fe41ee7.png": "/static/media/logo-transparent.8fe41ee7.png"
   },
   "entrypoints": [
     "static/js/runtime-main.c35c36f7.js",
-    "static/js/2.3cb8be3c.chunk.js",
+    "static/js/2.c1af989e.chunk.js",
     "static/css/main.f95f0ed1.chunk.css",
-    "static/js/main.3664b212.chunk.js"
+    "static/js/main.14acd349.chunk.js"
   ]
 }
