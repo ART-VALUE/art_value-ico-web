@@ -1,19 +1,13 @@
-import React, { FunctionComponent, useState } from 'react';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
-import Modal from 'react-modal';
-import { useCurrentUserDetails } from '../../contexts';
-import Wallet from '../../service/eth/Wallet';
+import { FunctionComponent, useState } from 'react';
+import { Stripe } from '@stripe/stripe-js';
 import PurchaseSlides from './purchase/PurchaseSlides';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './purchase/ErrorFallback';
 import { ButtonBig } from '../style/button';
-import { ModalCloseButton, modalStyle } from '../style/modal';
 import { TextClock } from './TextCountdown';
-import { A, H1, H2, P, StrongNumber } from '../style/text';
+import { A, H1, P, StrongNumber } from '../style/text';
 import { Main, MainWrapper } from '../style/grouping';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import AvModal from './AvModal';
 
 const HomeH1 = styled(H1)`
@@ -33,17 +27,10 @@ const Home: FunctionComponent<{
   stripePromise: Promise<Stripe>
 }> = ({ stripePromise }) => {
   const [purchaseDialogOpen, setPurchaseDialogOpen] = useState(false)
-  const endDate = 1623103199000 // 7/6/21 23:59:59 CEST https://www.epochconverter.com/
-  const currentUserDetails = useCurrentUserDetails()
-  const theme = useTheme()
+  const endDate = 1623275999000 // 9/6/21 23:59:59 CEST https://www.epochconverter.com/
 
   const handlePurchaseTokenClick = () => {
     setPurchaseDialogOpen(true)
-  }
-
-  const handleWalletSelected = (wallet: Wallet) => {
-    console.info(wallet)
-    setPurchaseDialogOpen(false)
   }
 
   const closeModal = () => {
