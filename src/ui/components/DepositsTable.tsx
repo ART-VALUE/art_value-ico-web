@@ -23,6 +23,9 @@ import ErrorContactInfo from "./ErrorContactInfo";
 import GenericError from "./GenericError";
 import { fractionlessToString } from "../../service/number";
 import config from "../../config";
+import AvModal from "./AvModal";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./purchase/ErrorFallback";
 
 const DepositDetailsButton = styled.button`
   background: none;
@@ -118,37 +121,37 @@ const DepositsTable: FunctionComponent<{}> = () => {
       : <P>You haven't made any presale deposits yet</P>
     }
 
-    <Modal
-      style={modalStyle(theme)}
+    <AvModal
       isOpen={(currentDepositDetails != null && !showVerifyDepositModal)}
       contentLabel="Deposit Details Dialog"
-      onRequestClose={closeDepositDetailsModal}>
-        {currentDepositDetails != null
-          ? <DepositDetails
-              deposit={currentDepositDetails}
-              onLaunchVerification={() => handleLaunchVerification()} />
-          : <ErrorP>No deposit selected</ErrorP>
-        }
-      <Button onClick={closeDepositDetailsModal}>close</Button>
-    </Modal>
-    <Modal
-      style={modalStyle(theme)}
+      onClose={closeDepositDetailsModal}>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          {currentDepositDetails != null
+            ? <DepositDetails
+                deposit={currentDepositDetails}
+                onLaunchVerification={() => handleLaunchVerification()} />
+            : <ErrorP>No deposit selected</ErrorP>
+          }
+        </ErrorBoundary>
+    </AvModal>
+    <AvModal
       isOpen={currentDepositDetails != null && showVerifyDepositModal}
       contentLabel="Deposit Details Dialog"
-      onRequestClose={closeDepositDetailsModal}>
-        {currentDepositDetails != null
-          ? <ConfirmAndVerifyDepositSlides
-            chainId={config.frontend.chainId}
-            deposit={currentDepositDetails}
-            onVerified={verifiedDeposit => {
-              qDeposits.refetch()
-              setCurrentDepositDetails(verifiedDeposit)
-              setShowVerifyDepositModal(false)
-            }} />
-          : <ErrorP>No deposit selected</ErrorP>
-        }
-      <Button onClick={closeDepositDetailsModal}>close</Button>
-    </Modal>
+      onClose={closeDepositDetailsModal}>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          {currentDepositDetails != null
+            ? <ConfirmAndVerifyDepositSlides
+              chainId={config.frontend.chainId}
+              deposit={currentDepositDetails}
+              onVerified={verifiedDeposit => {
+                qDeposits.refetch()
+                setCurrentDepositDetails(verifiedDeposit)
+                setShowVerifyDepositModal(false)
+              }} />
+            : <ErrorP>No deposit selected</ErrorP>
+          }
+        </ErrorBoundary>
+    </AvModal>
   </>
 }
 
