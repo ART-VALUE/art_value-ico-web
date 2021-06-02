@@ -1,17 +1,14 @@
 import BN from "bn.js";
 import React, { FunctionComponent, useEffect } from "react";
 import { useMutation } from "react-query";
-import { ETHER_TO_ADDRESS } from "../../../constants";
 import { useIos } from "../../../contexts";
 import { isNamedApiException } from "../../../service/api";
 import { createDeposit } from "../../../service/api/deposit";
 import Deposit from "../../../service/model/Deposit";
 import { fractionlessToString } from "../../../service/number";
-import { errorToString } from "../../../util";
 import { Button } from "../../style/button";
 import { ErrorP } from "../../style/error";
 import { A, H2, P } from "../../style/text";
-import ErrorContactInfo from "../ErrorContactInfo";
 import GenericError from "../GenericError";
 import LoadingRing from "../LoadingRing";
 

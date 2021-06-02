@@ -1,19 +1,14 @@
 import BN from "bn.js";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import Web3 from "web3";
 import { ChainId, txHashToExplorerUrl } from "../../../service/eth/networks";
-import payUsingWeb3, { EthPaymentTxResult } from "../../../service/eth/pay";
+import payUsingWeb3 from "../../../service/eth/pay";
 import Wallet from "../../../service/eth/Wallet";
-import LoadingRing from "../LoadingRing";
 import { TransactionReceipt } from "web3-core";
-import { MINIMUM_CONFIRMATIONS } from "../../../constants";
-import { ErrorP } from "../../style/error";
-import { A, H2, MonoData, P, Pre, SpanItalic } from "../../style/text";
+import { A, H2, MonoData, P, SpanItalic } from "../../style/text";
 import { weiToEtherStr } from "../../../service/eth/util";
-import { HorizontalCenter } from "../../style/grouping";
 import Loading from "../Loading";
-import { PromiEvent, Transaction } from "web3-core";
 import { Button } from "../../style/button";
 import GenericError from "../GenericError";
 

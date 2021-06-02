@@ -14,7 +14,6 @@ import { Button } from "../style/button";
 import { ErrorP } from "../style/error";
 import { Table, Th, TdAlignRight, Td, TdItalic, TdIconContainer, Tr, TrHead } from "../style/table";
 import { A, P } from "../style/text";
-import { CHAIN_ID } from "../../constants";
 import { txHashToExplorerUrl } from "../../service/eth/networks";
 import { modalStyle } from "../style/modal";
 import VerifyDepositSlide from "./purchase/VerifyDepositSlide";
@@ -23,6 +22,7 @@ import ConfirmAndVerifyDepositSlides from "./purchase/ConfirmAndVerifyDepositSli
 import ErrorContactInfo from "./ErrorContactInfo";
 import GenericError from "./GenericError";
 import { fractionlessToString } from "../../service/number";
+import config from "../../config";
 
 const DepositDetailsButton = styled.button`
   background: none;
@@ -96,7 +96,7 @@ const DepositsTable: FunctionComponent<{}> = () => {
               {deposit.ethTxHash == null
                 ? <TdItalic>Not yet created</TdItalic>
                 : <Td><A
-                    href={txHashToExplorerUrl(CHAIN_ID, deposit.ethTxHash)}
+                    href={txHashToExplorerUrl(config.frontend.chainId, deposit.ethTxHash)}
                     target="_blank" rel="noreferrer">
                       {deposit.ethTxHash.slice(0, 15)}...
                   </A></Td>
@@ -138,7 +138,7 @@ const DepositsTable: FunctionComponent<{}> = () => {
       onRequestClose={closeDepositDetailsModal}>
         {currentDepositDetails != null
           ? <ConfirmAndVerifyDepositSlides
-            chainId={CHAIN_ID}
+            chainId={config.frontend.chainId}
             deposit={currentDepositDetails}
             onVerified={verifiedDeposit => {
               qDeposits.refetch()

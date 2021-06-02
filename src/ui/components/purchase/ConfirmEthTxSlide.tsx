@@ -1,28 +1,20 @@
-import React from "react";
 import { useEffect } from "react";
 import { FunctionComponent, useState } from "react";
 import { useQuery } from "react-query";
 import Web3 from "web3";
-import { PromiEvent, Transaction } from "web3-core";
-import { MINIMUM_CONFIRMATIONS } from "../../../constants";
 import { ChainId, txHashToExplorerUrl } from "../../../service/eth/networks";
-import { EthPaymentTxResult } from "../../../service/eth/pay";
-import Deposit from "../../../service/model/Deposit";
 import { Button } from "../../style/button";
-import { ErrorP } from "../../style/error";
 import { A, H2, P, StrongNumber } from "../../style/text";
-import Loading from "../Loading";
 import LoadingRing from "../LoadingRing";
 import { TransactionReceipt } from "web3-core";
-import { setTokenSourceMapRange } from "typescript";
 import GenericError from "../GenericError";
+import config from "../../../config";
 
-const RECHECK_TIMEOUT = 2000
-
-class NotConfirmedYetSignal {
+class NotConfirmedYetException extends Error {
   confirmations: number;
 
   constructor(confirmations: number) {
+    super()
     this.confirmations = confirmations
   }
 }
@@ -41,14 +33,14 @@ const ConfirmEthTxSlide: FunctionComponent<{
       const blockNumber = await web3.eth.getBlockNumber()
       const newConfirmations = blockNumber - txReceipt.blockNumber
       setConfirmations(newConfirmations)
-      if (newConfirmations <= MINIMUM_CONFIRMATIONS) {
-        throw new NotConfirmedYetSignal(newConfirmations)
+      if (newConfirmations <= config.frontend.minimumConfirmations) {
+        throw new NotConfirmedYetException(newConfirmations)
       }
       return newConfirmations
     },
     {
       retry: (_, error) => {
-        if (error instanceof NotConfirmedYetSignal) {
+        if (error instanceof NotConfirmedYetException) {
           return true
         }
         return false
@@ -58,7 +50,7 @@ const ConfirmEthTxSlide: FunctionComponent<{
   )
 
   useEffect(() => {
-    if (!callbackCalled && confirmations >= MINIMUM_CONFIRMATIONS) {
+    if (!callbackCalled && confirmations >= config.frontend.minimumConfirmations) {
       setCallbackCalled(true)
       onTransactionConfirmed()
     }
@@ -76,9 +68,9 @@ const ConfirmEthTxSlide: FunctionComponent<{
         </>
       }
 
-      if (confirmations < MINIMUM_CONFIRMATIONS) {
+      if (confirmations < config.frontend.minimumConfirmations) {
         return <>
-          <P>Waiting for at least {MINIMUM_CONFIRMATIONS} confirmations...</P>
+          <P>Waiting for at least {config.frontend.minimumConfirmations} confirmations...</P>
           <P>
             This can take up to 10 minutes.
             You can safely close this window and come back later to the "My Profile" page to finish the deposit validation.<br/>
@@ -86,7 +78,7 @@ const ConfirmEthTxSlide: FunctionComponent<{
               View this transaction on Etherscan
             </A>
           </P>
-          <P><StrongNumber>{confirmations}</StrongNumber>/{MINIMUM_CONFIRMATIONS} confirmations</P>
+          <P><StrongNumber>{confirmations}</StrongNumber>/{config.frontend.minimumConfirmations} confirmations</P>
           <LoadingRing />
         </>
       }

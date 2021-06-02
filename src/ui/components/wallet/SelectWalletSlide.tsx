@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import Web3 from "web3";
-import { CHAIN_ID } from "../../../constants";
 import { useWallets } from "../../../contexts";
 import { createProvider, BrowserWalletNotFoundException } from "../../../service/eth/providers";
 import { ProviderType } from "../../../service/eth/ProviderType";
@@ -14,6 +13,7 @@ import Loading from "../Loading";
 import LoadingRing from "../LoadingRing";
 import SelectExistingWalletForm from "./SelectExistingWalletForm";
 import SelectNewWalletAddressForm from "./SelectNewWalletAddressForm";
+import config from "../../../config";
 
 const SelectWallet: FunctionComponent<{
   onWalletSelected: (wallet: Wallet) => void
@@ -23,7 +23,7 @@ const SelectWallet: FunctionComponent<{
   const [newWalletProviderType, setNewWalletProviderType] = useState<ProviderType | null>(null)
   const qNewWalletProvider = useQuery(
     ['provider', newWalletProviderType],
-    () => createProvider(newWalletProviderType!!, CHAIN_ID),
+    () => createProvider(newWalletProviderType!!, config.frontend.chainId),
     { enabled: newWalletProviderType != null, retry: false }
   )
   const web3 = qNewWalletProvider.data == null ? null : new Web3(qNewWalletProvider.data)

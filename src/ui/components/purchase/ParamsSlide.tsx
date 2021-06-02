@@ -7,10 +7,9 @@ import { browserDecimalSeparator, fractionlessToString, fractionlessNumberFromSt
 import { ErrorP } from "../../style/error"
 import { NumberFormatException } from "../../../service/number/exceptions"
 import { ImageButton } from "../../style/button"
+import config from "../../../config"
 
 const CENT = new BN('100')
-const DEPOSIT_PERCENTAGE = new BN('20')
-const MINIMUM_ARTS_AMOUNT = new BN('200')
 
 const ParamsSlide: FunctionComponent<{
   onEtherCheckout: (amount: BN) => void
@@ -40,7 +39,7 @@ const ParamsSlide: FunctionComponent<{
     }
     const { number: newAmount, withDecimalSeparator } = parseResult
     if (newAmount == null) return
-    if (newAmount.lt(MINIMUM_ARTS_AMOUNT)) {
+    if (newAmount.lt(config.stages.presale.minAmount)) {
       setAmountError('Amount is too small')
       setAmountText(withDecimalSeparator)
       return
@@ -59,8 +58,8 @@ const ParamsSlide: FunctionComponent<{
     onEtherCheckout(amount)
   }
 
-  const minimumAmountStr = fractionlessToString(MINIMUM_ARTS_AMOUNT)
-  const amountChargedNow = amount == null ? null : amount.mul(DEPOSIT_PERCENTAGE).div(CENT)
+  const minimumAmountStr = fractionlessToString(config.stages.presale.minAmount)
+  const amountChargedNow = amount == null ? null : amount.mul(config.stages.presale.depositPercentage).div(CENT)
   const amountChargedDuringPrivate = amountChargedNow == null || amount == null ? null : amount.sub(amountChargedNow)
 
   return (<>
@@ -70,7 +69,7 @@ const ParamsSlide: FunctionComponent<{
       fractional number (482, 787.00, 300.25, 222.44, 420.5 ...)
       you want to receive during the private ICO as a unique
       Art Value NFT Number (along with 2X this amount in ARTS).
-      You will be charged {DEPOSIT_PERCENTAGE.toString(10)}% 
+      You will be charged {config.stages.presale.depositPercentage.toString(10)}% 
       of this amount now as the presale deposit.
       It is possible the number you enter is already reserved
       by someone else. If so, you'll be given the option to choose

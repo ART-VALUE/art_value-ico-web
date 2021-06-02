@@ -2,13 +2,13 @@ import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { FunctionComponent } from "react";
 import { useTheme } from "styled-components";
-import { CHAIN_ID } from "../../constants";
 import { txHashToExplorerUrl } from "../../service/eth/networks";
 import { weiToEtherStr, weiToGweiStr } from "../../service/eth/util";
 import Deposit from "../../service/model/Deposit";
 import { fractionlessToString } from "../../service/number";
 import { Button } from "../style/button";
-import { H2, MonoData, P, Pre, PreItalic, SpanItalic } from "../style/text";
+import { H2, MonoData, P, SpanItalic } from "../style/text";
+import config from "../../config";
 
 const DepositDetails: FunctionComponent<{
   deposit: Deposit,
@@ -28,7 +28,7 @@ const DepositDetails: FunctionComponent<{
         : <>
           <MonoData>{deposit.ethTxHash}</MonoData>{' '}
           (<a
-            href={txHashToExplorerUrl(CHAIN_ID, deposit.ethTxHash)}
+            href={txHashToExplorerUrl(config.frontend.chainId, deposit.ethTxHash)}
             target="_blank" rel="noreferrer">
             View on etherscan
           </a>)

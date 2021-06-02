@@ -12,7 +12,6 @@ import CreateDepositSlide from "./CreateDepositSlide"
 import Deposit, { DepositDto } from "../../../service/model/Deposit"
 import VerifyDepositSlide from "./VerifyDepositSlide"
 import InfoSlide from "./InfoSlide"
-import * as constants from "../../../constants";
 import { TransactionReceipt } from "web3-core";
 import SetDepositEthTxHashSlide from "./UpdateDepositSlide"
 import { Button } from "../../style/button"
@@ -21,6 +20,7 @@ import ConfirmEthTxSlide from "./ConfirmEthTxSlide"
 import SuccessSlide from "./SuccessSlide"
 import Wallet from "../../../service/eth/Wallet"
 import Web3 from "web3"
+import config from "../../../config";
 
 const PurchaseSlides: FunctionComponent<{
   stripePromise: Promise<Stripe | null>,
@@ -40,9 +40,7 @@ const PurchaseSlides: FunctionComponent<{
   const [checkoutId, setCheckoutId] = useState<number>() // Used to track this checkout client side (different from AvTxId)
 
   useEffect(() => setCheckoutId(Math.random()), [])
-  
-  const chainId = constants.CHAIN_ID
-  const toAddress = constants.ETHER_TO_ADDRESS
+
 
   // const handleStripeCheckout = (_amount: BN) => {
   //   console.log(`Amount specified, stripe chosen: ${_amount}`)
@@ -89,8 +87,8 @@ const PurchaseSlides: FunctionComponent<{
           ? [
             <EtherSlides
               key={EtherSlides.name}
-              chainId={chainId}
-              toAddress={toAddress}
+              chainId={config.frontend.chainId}
+              toAddress={config.etherToAddress}
               amount={deposit.priceEther}
               gasPrice={deposit.gasPrice}
               onPaymentComplete={(receipt, wallet) => {
@@ -113,7 +111,7 @@ const PurchaseSlides: FunctionComponent<{
                       <ConfirmEthTxSlide
                         key={ConfirmEthTxSlide.name}
                         web3={new Web3(ethTxReceiptAndWallet.wallet.provider)}
-                        chainId={chainId}
+                        chainId={config.frontend.chainId}
                         txReceipt={ethTxReceiptAndWallet.receipt}
                         onTransactionConfirmed={() => {
                           setEthTxConfirmed(true)

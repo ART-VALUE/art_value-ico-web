@@ -1,9 +1,7 @@
-import BN from "bn.js";
-import React, { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useMutation } from "react-query";
-import { ETHER_TO_ADDRESS } from "../../../constants";
 import { useIos } from "../../../contexts";
-import { createDeposit, setDepositEthTxHash } from "../../../service/api/deposit";
+import { setDepositEthTxHash } from "../../../service/api/deposit";
 import Deposit from "../../../service/model/Deposit";
 import { Button } from "../../style/button";
 import { ErrorP } from "../../style/error";
